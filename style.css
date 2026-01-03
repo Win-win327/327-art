@@ -1,0 +1,180 @@
+:root {
+    /* 核心色票 */
+    --bg-dark: #0F172A; /* 深寶藍 */
+    --bg-light: #7DD3FC; /* 天空藍 */
+    --text-gold-start: #FFFFFF;
+    --text-gold-end: #FFD700; /* 溫暖金 */
+    --font-zh: 'Noto Serif TC', serif;
+    --font-en: 'Libre Bodoni', serif;
+    
+    --bg-splash: #FDFBF7; /* 潑彩系列背景 (米白) */
+    --text-dark: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-zh);
+    color: white;
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+/* 背景固定層：模擬深邃漸層 */
+.global-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom, var(--bg-dark), #1e3a8a, var(--bg-light));
+    z-index: -1;
+}
+
+/* 通用設定 */
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+section { padding: 80px 20px; min-height: 80vh; position: relative; }
+img { max-width: 100%; height: auto; display: block; }
+.en-font { font-family: var(--font-en); }
+
+/* 導覽列 */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.8); /* 半透明背景 */
+    backdrop-filter: blur(5px);
+}
+.logo { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 1.5rem; }
+.logo-img { height: 40px; }
+.nav-links { display: flex; gap: 30px; list-style: none; }
+.nav-links a { font-size: 0.9rem; letter-spacing: 1px; opacity: 0.8; }
+.nav-links a:hover { opacity: 1; color: var(--text-gold-end); }
+
+/* 首頁 */
+.hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.main-title {
+    font-family: var(--font-zh);
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+    
+    /* 金色金屬漸層字體 */
+    background: linear-gradient(to bottom, var(--text-gold-start), var(--text-gold-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 0px 5px rgba(255, 215, 0, 0.3)); /* 微微光暈 */
+}
+
+.hero-text p { font-size: 1.1rem; letter-spacing: 2px; opacity: 0.9; margin: 5px 0; }
+.highlight-text { color: var(--text-gold-end); font-weight: 600; margin-top: 20px; }
+
+/* 跑馬燈特效 */
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 60px;
+    padding: 20px 0;
+    background: rgba(255,255,255,0.05);
+}
+.marquee-content {
+    display: flex;
+    gap: 20px;
+    animation: scroll 30s linear infinite;
+    width: max-content;
+}
+.marquee-content img { height: 250px; object-fit: cover; border-radius: 4px; opacity: 0.9; }
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* 作品集 */
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-header h2 { font-family: var(--font-en); font-size: 3rem; margin-bottom: 10px; }
+.subtitle { letter-spacing: 3px; font-size: 1rem; opacity: 0.7; }
+
+.series-block { padding: 40px; border-radius: 10px; margin-bottom: 50px; }
+.series-title { font-size: 1.8rem; margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
+
+/* 潑彩系列特別樣式 (淺底) */
+.light-series {
+    background-color: var(--bg-splash);
+    color: var(--text-dark);
+}
+.light-series .series-title { border-bottom: 1px solid rgba(0,0,0,0.1); }
+.light-series .meta { color: #666; }
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+.art-card { margin-bottom: 20px; }
+.art-card img { width: 100%; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.3s; }
+.art-card:hover img { transform: scale(1.02); }
+.art-info h4 { font-size: 1.2rem; margin-bottom: 5px; }
+.meta { font-size: 0.85rem; font-family: var(--font-en); opacity: 0.7; margin-bottom: 10px; }
+.quote { font-style: italic; font-size: 0.9rem; border-left: 2px solid var(--text-gold-end); padding-left: 10px; margin-top: 10px; }
+
+.portfolio-footer { text-align: center; margin-top: 50px; font-size: 1.2rem; letter-spacing: 2px; color: var(--text-gold-end); }
+
+/* 商店 */
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: center; }
+.product-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+.product-img { position: relative; margin-bottom: 15px; }
+.tag { position: absolute; top: 10px; right: 10px; background: var(--text-gold-end); color: #000; padding: 2px 8px; font-size: 0.8rem; font-weight: bold; }
+.tag.buy { background: #fff; }
+.btn-gold {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 25px;
+    border: 1px solid var(--text-gold-end);
+    color: var(--text-gold-end);
+    letter-spacing: 1px;
+}
+.btn-gold:hover { background: var(--text-gold-end); color: #000; }
+
+/* 關於我 */
+.about-container { max-width: 800px; margin: 0 auto; }
+.intro-quote { font-size: 1.5rem; text-align: center; margin-bottom: 50px; color: var(--text-gold-end); }
+.text-block { margin-bottom: 40px; font-size: 1.05rem; text-align: justify; }
+.text-block p { margin-bottom: 20px; }
+.story-image { margin: 40px 0; text-align: center; }
+.story-image img { width: 100%; border-radius: 4px; }
+.caption { font-size: 0.8rem; color: #ccc; margin-top: 10px; display: block; }
+.highlight-box { border-top: 1px solid rgba(255,255,255,0.2); border-bottom: 1px solid rgba(255,255,255,0.2); padding: 30px 0; }
+.final-statement { font-size: 1.5rem; text-align: center; margin-top: 30px; font-weight: bold; color: var(--text-gold-end); }
+
+/* 聯絡 */
+.contact-box { text-align: center; padding: 60px 0; }
+.email-link { font-family: var(--font-en); font-size: 1.5rem; border-bottom: 1px solid white; padding-bottom: 5px; }
+.email-link:hover { color: var(--text-gold-end); border-color: var(--text-gold-end); }
+.footer-note { margin-top: 50px; font-size: 0.8rem; opacity: 0.5; font-family: var(--font-en); }
+
+/* RWD 手機版調整 */
+@media (max-width: 768px) {
+    .main-title { font-size: 2.5rem; }
+    .nav-links { display: none; } /* 簡單起見，手機版暫隱藏選單，實際開發可加漢堡選單 */
+    .hero-text p { font-size: 1rem; }
+    section { padding: 60px 15px; }
+}
