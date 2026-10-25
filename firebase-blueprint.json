@@ -1,0 +1,60 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "An order submitted by a customer during checkout.",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerAddress": { "type": "string" },
+        "items": { 
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "orderTotal": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["customerName", "customerEmail", "customerPhone"]
+    },
+    "PreOrder": {
+      "title": "PreOrder",
+      "description": "A pre-order wish submitted by a customer.",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "itemType": { "type": "string" },
+        "wantedSize": { "type": "string" },
+        "message": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["customerName", "itemType"]
+    },
+    "PreOrderStat": {
+      "title": "PreOrderStat",
+      "description": "Stores current pre-order statistics for public consumption.",
+      "type": "object",
+      "properties": {
+        "currentOrders": { "type": "number" }
+      },
+      "required": ["currentOrders"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Stores completed cart checkout orders."
+    },
+    "/preOrders/{preOrderId}": {
+      "schema": "PreOrder",
+      "description": "Stores pre-orders and wishes from the wish pool / pre-order section."
+    },
+    "/preOrderStats/{productId}": {
+      "schema": "PreOrderStat",
+      "description": "Stores current accumulated pieces for a pre-order product."
+    }
+  }
+}

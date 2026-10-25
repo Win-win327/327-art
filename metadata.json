@@ -1,0 +1,8 @@
+{
+  "name": "327 ART",
+  "description": "327 ART 台灣藝術家張景雯 Win 官方網站與極光動物魔法卡線上商店",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

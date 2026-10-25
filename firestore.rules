@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    
+    // Validation helpers
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    function incoming() { return request.resource.data; }
+    
+    // Orders
+    match /orders/{orderId} {
+      allow create: if isValidId(orderId) 
+        && incoming().keys().hasAll(['customerName', 'customerEmail', 'customerPhone'])
+        && incoming().customerName is string && incoming().customerName.size() <= 100
+        && incoming().customerEmail is string && incoming().customerEmail.size() <= 100
+        && incoming().customerPhone is string && incoming().customerPhone.size() <= 100
+        && incoming().createdAt == request.time;
+        
+      // For now, no read access so customer data is safe. The admin can view in Firebase Console.
+      allow read, update, delete: if false; 
+    }
+    
+    // PreOrders
+    match /preOrders/{preOrderId} {
+      allow create: if isValidId(preOrderId)
+        && incoming().keys().hasAll(['customerName', 'itemType'])
+        && incoming().customerName is string && incoming().customerName.size() <= 100
+        && incoming().itemType is string && incoming().itemType.size() <= 100
+        && incoming().createdAt == request.time;
+        
+      allow read, update, delete: if false;
+    }
+
+    // PreOrderStats
+    match /preOrderStats/{productId} {
+      allow read: if true;
+      allow create, update: if isValidId(productId)
+        && (incoming().currentOrders is int || incoming().currentOrders is float)
+        && incoming().currentOrders >= 0;
+    }
+  }
+}

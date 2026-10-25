@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /wish-pool
+Disallow: /checkout
+Disallow: /payment
+Disallow: /order-success
+
+Sitemap: https://327-art.com/sitemap.xml
