@@ -277,14 +277,6 @@ export default function Cart() {
                 <span className="font-mono">NT$ {cartTotal}</span>
               </p>
               
-              {/* 滿 3000 打 9 折 */}
-              <p className="flex justify-between">
-                <span>{t("cart.discount_label", "滿 $3000 打 9 折")}</span>
-                <span className={cartDiscount > 0 ? "text-green-400 font-mono font-bold" : "text-gray-500 font-mono"}>
-                  {cartDiscount > 0 ? `- NT$ ${cartDiscount}` : '-'}
-                </span>
-              </p>
-
               {/* Shipping Fee */}
               <div className="flex justify-between items-center">
                 <span className="flex items-center gap-1">
@@ -312,10 +304,20 @@ export default function Cart() {
             <div className="flex justify-between items-center pt-2.5 border-t border-white/10">
               <span className="text-gray-200 tracking-wider font-semibold flex flex-col">
                 <span className="text-sm">{t("cart.total_miracle", "總計的奇蹟")}</span>
-                {cartTotal < 3000 && (
+                {isInternationalShipping ? (
                   <span className="text-[11px] text-gold-end font-normal">
-                    {t("cart.need_discount", "再買 $ {amt} 即享 9 折優惠").replace("{amt}", String(3000 - cartTotal))}
+                    ✦ 已折抵 NT$ 100 國際運費
                   </span>
+                ) : (
+                  cartTotal >= 2000 ? (
+                    <span className="text-[11px] text-green-400 font-normal">
+                      ✓ 已享台灣免運優惠！
+                    </span>
+                  ) : (
+                    <span className="text-[11px] text-gray-400 font-normal">
+                      再買 NT$ {2000 - cartTotal} 即享台灣免運
+                    </span>
+                  )
                 )}
               </span>
               <span className="text-2xl font-bold text-gold-end font-mono">NT$ {cartFinalTotal}</span>

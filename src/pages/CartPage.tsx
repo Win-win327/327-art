@@ -162,36 +162,36 @@ export default function CartPage() {
                 </span>
               </div>
 
-              {/* Promotion Achievement Banner (Quiet, Clean, No Pill Badges) */}
-              <div className="px-5 sm:px-6 py-3 bg-gold-end/10 border-b border-gold-end/20 text-xs sm:text-sm text-gold-end flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
-                <div className="flex items-center gap-1.5">
-                  <Sparkles size={14} className="shrink-0 text-gold-end" />
-                  {cartTotal >= 3000 ? (
-                    <span className="font-semibold text-white">
-                      {t("cart.discount_applied", "已享全館滿 $3,000 打 9 折優惠")}（省 NT$ {cartDiscount}）
-                    </span>
-                  ) : (
-                    <span>
-                      {t("cart.need_discount", "再買 $ {amt} 即享 9 折優惠").replace("{amt}", String(3000 - cartTotal))}
-                    </span>
-                  )}
-                </div>
-
-                <div className="text-xs text-gray-300">
+              {/* Promotion Achievement Banner: Focus on Shipping Privileges */}
+              <div className="px-5 sm:px-6 py-3 bg-gold-end/10 border-b border-gold-end/20 text-xs sm:text-sm text-gold-end flex items-center justify-between gap-1.5">
+                <div className="flex items-center gap-2">
+                  <Sparkles size={15} className="shrink-0 text-gold-end" />
                   {isInternationalShipping ? (
-                    <span className="text-gold-end font-medium">
-                      ✦ {t("cart.intl_privilege", "國際運費每筆現折 NT$ 100 禮遇")}
+                    <span className="text-white font-medium">
+                      ✦ 國際運費每筆現折 <strong className="text-gold-end">NT$ 100</strong> 禮遇已套用
                     </span>
                   ) : (
                     cartTotal >= 2000 ? (
                       <span className="text-green-400 font-medium">
-                        ✓ {t("cart.domestic_free_notice", "台灣境內滿 NT$ 2,000 享免運費")}
+                        ✓ 恭喜！已享有台灣境內滿 NT$ 2,000 免運費優惠！
                       </span>
                     ) : (
-                      <span className="text-gray-400">
-                        {t("cart.domestic_need_more", "台灣滿 NT$ 2,000 免運，尚差 NT$ {amt}").replace("{amt}", String(2000 - cartTotal))}
+                      <span className="text-gray-200">
+                        台灣滿 NT$ 2,000 享免運費，目前尚差 <strong className="text-gold-end font-mono">NT$ {2000 - cartTotal}</strong>
                       </span>
                     )
+                  )}
+                </div>
+
+                <div className="text-xs text-gray-300 hidden sm:block">
+                  {isInternationalShipping ? (
+                    <span className="text-gold-end">
+                      {selectedDestination.name}直送
+                    </span>
+                  ) : (
+                    <span className="text-gray-400">
+                      中華郵政 / 宅配包裹安全配送
+                    </span>
                   )}
                 </div>
               </div>
@@ -445,13 +445,15 @@ export default function CartPage() {
                   <span className="font-mono text-white font-semibold">NT$ {cartTotal}</span>
                 </div>
 
-                {/* Discount: 滿 $3000 打 9 折 */}
-                <div className="flex justify-between items-center">
-                  <span>{t("cart.discount_label", "滿 $3000 打 9 折")}</span>
-                  <span className={cartDiscount > 0 ? "text-gold-end font-mono font-bold" : "text-gray-500 font-mono"}>
-                    {cartDiscount > 0 ? `- NT$ ${cartDiscount}` : '-'}
-                  </span>
-                </div>
+                {/* Discount (if applicable) */}
+                {cartDiscount > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span>{t("cart.discount_label", "滿 $3000 打 9 折")}</span>
+                    <span className="text-gold-end font-mono font-bold">
+                      - NT$ {cartDiscount}
+                    </span>
+                  </div>
+                )}
 
                 {/* Shipping Fee */}
                 <div className="flex justify-between items-center pt-2 border-t border-white/5">

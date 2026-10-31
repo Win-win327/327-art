@@ -16,8 +16,8 @@ export interface ShippingDestination {
 
 export const INTERNATIONAL_DISCOUNT = 100; // 每筆國際運費折扣 100 元
 export const DOMESTIC_FREE_SHIPPING_THRESHOLD = 2000; // 台灣境內滿 2000 免運
-export const CART_DISCOUNT_THRESHOLD = 3000; // 滿 3000 打 9 折
-export const CART_DISCOUNT_RATE = 0.10; // 9 折 (省 10%)
+export const CART_DISCOUNT_THRESHOLD = 3000; // （目前暫停）
+export const CART_DISCOUNT_RATE = 0; // 暫停滿 3000 打 9 折優惠（保留運費優惠）
 
 // Clean destination names without messy parentheses
 export const SHIPPING_DESTINATIONS: ShippingDestination[] = [

@@ -141,10 +141,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const cartTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
   
-  // 滿 $3,000 打 9 折 (省 10%)
-  const cartDiscount = cartTotal >= CART_DISCOUNT_THRESHOLD 
-    ? Math.floor(cartTotal * CART_DISCOUNT_RATE) 
-    : 0;
+  // 滿 $3,000 打 9 折優惠先拿掉（保留運費優惠）
+  const cartDiscount = 0;
 
   // 運費計算（依據所選國家與地區）
   const shippingResult = calculateShipping(cartTotal, selectedDestination);

@@ -2,7 +2,7 @@ import { useCart } from "../context/CartContext";
 import { useLanguage } from "../context/LanguageContext";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronLeft, Loader2, Globe, Truck, Sparkles, CreditCard, Building2, MessageCircle } from "lucide-react";
+import { ChevronLeft, Loader2, Globe, Truck, Sparkles, CreditCard, Building2, MessageCircle, Copy, Check, Clock } from "lucide-react";
 import { submitOrder } from "../lib/firebase";
 
 export default function Payment() {
@@ -23,6 +23,14 @@ export default function Payment() {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const handleCopy = (text: string, field: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2500);
+    });
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -183,47 +191,136 @@ export default function Payment() {
               )}
             </div>
 
-            {/* Payment Method / Line Notice Card */}
-            <div className="bg-black/40 border border-gold-end/40 p-6 rounded-2xl text-gray-300 tracking-wider leading-relaxed shadow-xl space-y-4">
+            {/* Bank Transfer Information Card */}
+            <div className="bg-black/40 border border-gold-end/40 p-6 rounded-2xl text-gray-300 tracking-wider leading-relaxed shadow-xl space-y-5">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <h2 className="text-lg sm:text-xl text-white font-bold flex items-center gap-2">
-                  <CreditCard className="w-5 h-5 text-gold-end" />
-                  <span>付款方式說明</span>
+                  <Building2 className="w-5 h-5 text-gold-end" />
+                  <span>付款方式：ATM 銀行轉帳／網路銀行匯款</span>
                 </h2>
                 <span className="text-xs bg-gold-end/20 text-gold-end px-2.5 py-1 rounded-full font-bold">
-                  官方客服諮詢
+                  目前收款方式
                 </span>
               </div>
 
-              {/* Notice Card */}
-              <div className="bg-black/50 p-5 rounded-xl border border-white/10 space-y-3">
+              {/* Bank Account Details Box */}
+              <div className="bg-gradient-to-br from-gold-end/10 via-black/50 to-black/70 p-5 rounded-xl border border-gold-end/30 space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-gold-end font-semibold uppercase tracking-widest">Bank Transfer Details</span>
+                  <span className="text-xs text-gray-400">請匯入以下專屬帳戶</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                  {/* Bank Name & Code */}
+                  <div className="bg-black/60 p-3.5 rounded-lg border border-white/10 flex items-center justify-between">
+                    <div>
+                      <span className="text-xs text-gray-400 block mb-0.5">收款銀行 / 銀行代碼</span>
+                      <span className="text-white font-bold text-base">國泰世華商業銀行 <span className="text-gold-end font-mono">（013）</span></span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy("013", "bankCode")}
+                      className="px-2.5 py-1.5 rounded-md bg-white/10 hover:bg-gold-end hover:text-black text-gold-end text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                      title="複製代碼"
+                    >
+                      {copiedField === "bankCode" ? <Check size={14} /> : <Copy size={14} />}
+                      <span>{copiedField === "bankCode" ? "已複製" : "複製代碼"}</span>
+                    </button>
+                  </div>
+
+                  {/* Account Name */}
+                  <div className="bg-black/60 p-3.5 rounded-lg border border-white/10">
+                    <span className="text-xs text-gray-400 block mb-0.5">戶名 / Account Name</span>
+                    <span className="text-white font-bold text-base">張景雯</span>
+                  </div>
+                </div>
+
+                {/* Account Number with large display & copy button */}
+                <div className="bg-black/70 p-4 rounded-xl border border-gold-end/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-xs text-gray-400 block mb-1">銀行帳號 / Account Number</span>
+                    <span className="text-gold-end font-mono font-bold text-xl sm:text-2xl tracking-wider select-all">
+                      069700023796
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy("069700023796", "accountNum")}
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-gold-end text-black font-bold text-xs sm:text-sm hover:bg-yellow-400 transition-all shadow-md cursor-pointer shrink-0"
+                  >
+                    {copiedField === "accountNum" ? <Check size={16} /> : <Copy size={16} />}
+                    <span>{copiedField === "accountNum" ? "已複製帳號！" : "一鍵複製帳號"}</span>
+                  </button>
+                </div>
+
+                {/* Transfer Instructions */}
+                <div className="pt-2 text-xs sm:text-sm text-gray-300 space-y-1.5 leading-relaxed border-t border-white/10">
+                  <p className="text-white font-semibold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gold-end"></span>
+                    <span>匯款步驟說明：</span>
+                  </p>
+                  <ol className="list-decimal list-inside pl-1 space-y-1 text-gray-300">
+                    <li>請將應付總額匯款至上述國泰世華銀行帳戶。</li>
+                    <li>匯款完成後，請點擊下方按鈕送出訂單，系統將產生您的「訂單編號」。</li>
+                    <li>請加入官方 LINE（@327art）或來信告知您的「訂單姓名」與「帳號末五碼」，我們將即刻對帳並安排出貨！</li>
+                  </ol>
+                </div>
+              </div>
+
+              {/* Coming Soon: Credit Card & Online Payment Announcement Card */}
+              <div className="bg-gradient-to-r from-purple-950/40 via-blue-950/40 to-black/60 p-5 rounded-xl border border-purple-400/30 space-y-3 relative overflow-hidden">
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                    <Sparkles size={13} className="text-yellow-300" />
+                    <span>敬請期待・即將上線</span>
+                  </span>
+                  <span className="text-xs text-gray-400">審核開通中</span>
+                </div>
+
+                <div className="space-y-1.5">
+                  <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                    <CreditCard className="w-5 h-5 text-purple-400" />
+                    <span>線上刷卡支付即將上線！</span>
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                    為提供顧客更安全、便捷且多樣化的結帳體驗，我們已正在申請與審核「應援科技」線上數位金流服務（審核流程約需 1 個多月）。
+                    未來將全面正式開通<strong>【信用卡線上刷卡、超商代碼繳費】</strong>等多種支付方式！
+                  </p>
+                  <p className="text-xs text-purple-200/80 leading-relaxed">
+                    在金流正式上線前的過渡期間，歡迎大家先利用【ATM 銀行轉帳／網銀匯款】或【官方 LINE 專人一對一服務】完成訂購，再次由衷感謝大家的喜愛與耐心等待！
+                  </p>
+                </div>
+              </div>
+
+              {/* Official LINE & Email Contact Box */}
+              <div className="bg-black/50 p-4 sm:p-5 rounded-xl border border-white/10 space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/30">
                     <MessageCircle size={22} />
                   </div>
                   <div className="space-y-1">
-                    <p className="text-white font-semibold text-base sm:text-lg">
-                      如需信用卡之外的付款方式，請加官方 LINE
+                    <p className="text-white font-semibold text-sm sm:text-base">
+                      官方 LINE 客服（匯款回報與訂單確認）
                     </p>
-                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                      我們提供專人一對一服務，海內外顧客送出訂單後，可直接加入官方 LINE 諮詢多元付款管道或訂單確認。
+                    <p className="text-gray-400 text-xs leading-relaxed">
+                      送出訂單或完成匯款後，歡迎隨時加入官方 LINE 聯繫我們，專人將迅速為您核對訂單與款項。
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                <div className="pt-1 flex flex-col sm:flex-row gap-2.5">
                   <a
                     href="https://lin.ee/o8qHjzS"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold px-5 py-3 rounded-xl transition-all shadow-lg text-sm tracking-wider"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold px-4 py-2.5 rounded-xl transition-all shadow-md text-xs sm:text-sm tracking-wider"
                   >
-                    <MessageCircle size={18} />
-                    <span>加入官方 LINE 聯繫 (@327art)</span>
+                    <MessageCircle size={16} />
+                    <span>加入官方 LINE (@327art) 回報末五碼</span>
                   </a>
                   <a
                     href="mailto:poweranimal2212@gmail.com"
-                    className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border border-white/10 px-4 py-3 rounded-xl transition-all text-sm tracking-wider"
+                    className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border border-white/10 px-3.5 py-2.5 rounded-xl transition-all text-xs tracking-wider"
                   >
                     客服信箱：poweranimal2212@gmail.com
                   </a>
@@ -277,13 +374,15 @@ export default function Payment() {
                   <span className="font-mono">NT$ {cartTotal}</span>
                 </div>
 
-                {/* 滿 $3000 打 9 折 */}
-                <div className="flex justify-between items-center text-sm text-gray-300">
-                  <span>{t("cart.discount_label", "滿 $3000 打 9 折")}</span>
-                  <span className={cartDiscount > 0 ? "text-green-400 font-mono font-bold" : "text-gray-500 font-mono"}>
-                    {cartDiscount > 0 ? `- NT$ ${cartDiscount}` : '-'}
-                  </span>
-                </div>
+                {/* 折扣（若有才顯示） */}
+                {cartDiscount > 0 && (
+                  <div className="flex justify-between items-center text-sm text-gray-300">
+                    <span>{t("cart.discount_label", "滿 $3000 打 9 折")}</span>
+                    <span className="text-green-400 font-mono font-bold">
+                      - NT$ {cartDiscount}
+                    </span>
+                  </div>
+                )}
 
                 {/* 運費 */}
                 <div className="flex justify-between items-center text-sm text-gray-300 pt-1 border-t border-white/5">

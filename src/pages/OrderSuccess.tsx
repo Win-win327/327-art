@@ -16,7 +16,10 @@ import {
   X, 
   ShieldCheck, 
   ChevronRight, 
-  ExternalLink 
+  ExternalLink,
+  Building2,
+  CreditCard,
+  Sparkles
 } from "lucide-react";
 import { getCartItemTitle } from "../utils/cartHelpers";
 
@@ -441,37 +444,122 @@ export default function OrderSuccess() {
           </div>
         )}
 
-        {/* 後續步驟說明 */}
-        <div className="bg-white/5 border border-white/10 rounded-lg p-6 mb-8 text-left space-y-4 text-gray-300 tracking-wider leading-relaxed text-sm">
-          <p className="text-gold-end font-semibold text-center mb-3 text-base">
-            訂單確認與後續步驟
-          </p>
-          <div className="bg-black/30 p-4 rounded-lg border border-white/10 space-y-2">
-            <p className="text-white font-semibold flex items-center gap-2">
+        {/* 匯款帳戶資訊與後續步驟說明 */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-7 mb-8 text-left space-y-5 text-gray-300 tracking-wider leading-relaxed text-sm">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h3 className="text-white font-bold text-base sm:text-lg flex items-center gap-2">
+              <Building2 className="w-5 h-5 text-gold-end" />
+              <span>訂單付款方式：ATM 銀行轉帳 / 網路銀行匯款</span>
+            </h3>
+            <span className="text-xs bg-gold-end/20 text-gold-end px-2.5 py-1 rounded-full font-bold">
+              待匯款確認
+            </span>
+          </div>
+
+          {/* 銀行帳戶詳情卡片 */}
+          <div className="bg-black/50 p-5 rounded-xl border border-gold-end/30 space-y-4">
+            <p className="text-xs text-gold-end font-semibold tracking-wider">
+              ✦ 請將本次訂單總金額匯入以下專屬帳戶：
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* 銀行名稱與代碼 */}
+              <div className="bg-black/70 p-3.5 rounded-lg border border-white/10 flex items-center justify-between">
+                <div>
+                  <span className="text-xs text-gray-400 block mb-0.5">收款銀行 / 銀行代碼</span>
+                  <span className="text-white font-bold text-sm sm:text-base">國泰世華商業銀行 <span className="text-gold-end font-mono">（013）</span></span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleCopy("013", "successBankCode")}
+                  className="px-2.5 py-1.5 rounded-md bg-white/10 hover:bg-gold-end hover:text-black text-gold-end text-xs font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                >
+                  {copiedField === "successBankCode" ? <Check size={14} /> : <Copy size={14} />}
+                  <span>{copiedField === "successBankCode" ? "已複製" : "複製代碼"}</span>
+                </button>
+              </div>
+
+              {/* 戶名 */}
+              <div className="bg-black/70 p-3.5 rounded-lg border border-white/10">
+                <span className="text-xs text-gray-400 block mb-0.5">戶名 / Account Name</span>
+                <span className="text-white font-bold text-sm sm:text-base">張景雯</span>
+              </div>
+            </div>
+
+            {/* 帳號與一鍵複製 */}
+            <div className="bg-black/80 p-4 rounded-xl border border-gold-end/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span className="text-xs text-gray-400 block mb-1">銀行帳號 / Account Number</span>
+                <span className="text-gold-end font-mono font-bold text-xl sm:text-2xl tracking-wider select-all">
+                  069700023796
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => handleCopy("069700023796", "successAccountNum")}
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-lg bg-gold-end text-black font-bold text-xs sm:text-sm hover:bg-yellow-400 transition-all shadow-md cursor-pointer shrink-0"
+              >
+                {copiedField === "successAccountNum" ? <Check size={16} /> : <Copy size={16} />}
+                <span>{copiedField === "successAccountNum" ? "已複製帳號！" : "一鍵複製帳號"}</span>
+              </button>
+            </div>
+
+            {/* 匯款後回報提醒 */}
+            <div className="pt-2 text-xs text-gray-300 leading-relaxed border-t border-white/10 space-y-1">
+              <p className="text-white font-semibold">
+                ※ 匯款後回報方式：
+              </p>
+              <p>
+                完成轉帳後，請點選下方綠色按鈕加入官方 LINE（或來信），提供您的【訂單編號：<span className="text-gold-end font-mono font-bold">{order?.orderNumber || "請見上方"}</span>】與【轉帳帳號末五碼】，我們核對款項後將即刻為您排單製作／寄送！
+              </p>
+            </div>
+          </div>
+
+          {/* 敬請期待：即將上線刷卡支付說明卡片 */}
+          <div className="bg-gradient-to-r from-purple-950/40 via-blue-950/40 to-black/60 p-5 rounded-xl border border-purple-400/30 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                <Sparkles size={13} className="text-yellow-300" />
+                <span>敬請期待・即將上線</span>
+              </span>
+              <span className="text-xs text-gray-400">審核中</span>
+            </div>
+            <h4 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-purple-400" />
+              <span>線上刷卡支付即將上線！</span>
+            </h4>
+            <p className="text-xs text-gray-300 leading-relaxed">
+              為提供顧客更安全流暢的多元結帳管道，我們已正在申請與審核「應援科技」線上數位金流服務（審核流程約需 1 個多月）。
+              未來將全面正式開通<strong>【信用卡線上刷卡、超商代碼繳費】</strong>等多種支付方式！
+            </p>
+            <p className="text-xs text-purple-200/80 leading-relaxed">
+              在金流正式上線前的過渡期間，暫由【ATM 銀行轉帳】與【官方 LINE 專人服務】為大家提供最安心的購買體驗，感謝您的喜愛與耐心等候！
+            </p>
+          </div>
+
+          {/* 官方 LINE 回報按鈕 */}
+          <div className="bg-black/30 p-4 rounded-xl border border-white/10 space-y-2">
+            <div className="flex items-center gap-2 text-white font-semibold text-sm">
               <MessageCircle size={18} className="text-[#06C755]" />
-              <span>如需信用卡之外的付款方式，請加官方 LINE</span>
-            </p>
+              <span>加入官方 LINE 回報帳號末五碼</span>
+            </div>
             <p className="text-xs text-gray-400">
-              我們已收到您的訂單資料！海內外顧客送出訂單後，可直接透過官方 LINE 由專人為您提供付款協助與訂單進度確認。
+              點擊下方按鈕加入官方 LINE，傳送您的「姓名、訂單編號與帳號末五碼」，我們將由專人竭誠為您服務。
             </p>
-            <div className="pt-2">
+            <div className="pt-1">
               <a
                 href="https://lin.ee/o8qHjzS"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold px-4 py-2.5 rounded-lg text-xs tracking-wider transition-all shadow"
+                className="inline-flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold px-4 py-2.5 rounded-lg text-xs sm:text-sm tracking-wider transition-all shadow"
               >
                 <MessageCircle size={16} />
                 <span>加入官方 LINE 聯繫 (@327art)</span>
               </a>
             </div>
           </div>
-          <p>
-            {"※ 聯繫時請提供您的 "}
-            <strong className="text-white">訂單編號、姓名與電話</strong>
-            {"，我們將由專人竭誠為您服務。"}
-          </p>
-          <p className="text-xs text-gray-500 pt-2 text-center">
+
+          <p className="text-xs text-gray-500 pt-1 text-center">
             {t("success.fraud_warning", "（防詐騙提醒：我們不會主動要求您操作 ATM 或解除分期設定）")}
           </p>
         </div>

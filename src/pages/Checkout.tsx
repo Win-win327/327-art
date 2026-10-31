@@ -413,13 +413,15 @@ export default function Checkout() {
                   <span className="font-mono">NT$ {cartTotal}</span>
                 </div>
 
-                {/* 滿 $3000 打 9 折 */}
-                <div className="flex justify-between items-center">
-                  <span>{t("cart.discount_label", "滿 $3000 打 9 折")}</span>
-                  <span className={cartDiscount > 0 ? "text-green-400 font-mono font-bold" : "text-gray-500 font-mono"}>
-                    {cartDiscount > 0 ? `- NT$ ${cartDiscount}` : '-'}
-                  </span>
-                </div>
+                {/* 折扣（若有才顯示） */}
+                {cartDiscount > 0 && (
+                  <div className="flex justify-between items-center">
+                    <span>{t("cart.discount_label", "滿 $3000 打 9 折")}</span>
+                    <span className="text-green-400 font-mono font-bold">
+                      - NT$ {cartDiscount}
+                    </span>
+                  </div>
+                )}
 
                 {/* Shipping Fee */}
                 <div className="flex justify-between items-center pt-1 border-t border-white/5">
