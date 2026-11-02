@@ -515,28 +515,6 @@ export default function OrderSuccess() {
             </div>
           </div>
 
-          {/* 敬請期待：即將上線刷卡支付說明卡片 */}
-          <div className="bg-gradient-to-r from-purple-950/40 via-blue-950/40 to-black/60 p-5 rounded-xl border border-purple-400/30 space-y-2.5">
-            <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
-                <Sparkles size={13} className="text-yellow-300" />
-                <span>敬請期待・即將上線</span>
-              </span>
-              <span className="text-xs text-gray-400">審核中</span>
-            </div>
-            <h4 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-              <CreditCard className="w-4 h-4 text-purple-400" />
-              <span>線上刷卡支付即將上線！</span>
-            </h4>
-            <p className="text-xs text-gray-300 leading-relaxed">
-              為提供顧客更安全流暢的多元結帳管道，我們已正在申請與審核「應援科技」線上數位金流服務（審核流程約需 1 個多月）。
-              未來將全面正式開通<strong>【信用卡線上刷卡、超商代碼繳費】</strong>等多種支付方式！
-            </p>
-            <p className="text-xs text-purple-200/80 leading-relaxed">
-              在金流正式上線前的過渡期間，暫由【ATM 銀行轉帳】與【官方 LINE 專人服務】為大家提供最安心的購買體驗，感謝您的喜愛與耐心等候！
-            </p>
-          </div>
-
           {/* 官方 LINE 回報按鈕 */}
           <div className="bg-black/30 p-4 rounded-xl border border-white/10 space-y-2">
             <div className="flex items-center gap-2 text-white font-semibold text-sm">
@@ -557,6 +535,20 @@ export default function OrderSuccess() {
                 <span>加入官方 LINE 聯繫 (@327art)</span>
               </a>
             </div>
+          </div>
+
+          {/* 敬請期待：即將上線刷卡支付說明卡片 */}
+          <div className="bg-gradient-to-r from-purple-950/40 via-blue-950/40 to-black/60 p-4 sm:p-5 rounded-xl border border-purple-400/30 space-y-2">
+            <div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                <Sparkles size={13} className="text-yellow-300" />
+                <span>敬請期待・即將上線</span>
+              </span>
+            </div>
+            <h4 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-purple-400" />
+              <span>線上刷卡支付即將上線！</span>
+            </h4>
           </div>
 
           <p className="text-xs text-gray-500 pt-1 text-center">

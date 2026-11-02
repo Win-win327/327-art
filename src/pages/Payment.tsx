@@ -267,31 +267,6 @@ export default function Payment() {
                 </div>
               </div>
 
-              {/* Coming Soon: Credit Card & Online Payment Announcement Card */}
-              <div className="bg-gradient-to-r from-purple-950/40 via-blue-950/40 to-black/60 p-5 rounded-xl border border-purple-400/30 space-y-3 relative overflow-hidden">
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
-                    <Sparkles size={13} className="text-yellow-300" />
-                    <span>敬請期待・即將上線</span>
-                  </span>
-                  <span className="text-xs text-gray-400">審核開通中</span>
-                </div>
-
-                <div className="space-y-1.5">
-                  <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                    <CreditCard className="w-5 h-5 text-purple-400" />
-                    <span>線上刷卡支付即將上線！</span>
-                  </h3>
-                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-                    為提供顧客更安全、便捷且多樣化的結帳體驗，我們已正在申請與審核「應援科技」線上數位金流服務（審核流程約需 1 個多月）。
-                    未來將全面正式開通<strong>【信用卡線上刷卡、超商代碼繳費】</strong>等多種支付方式！
-                  </p>
-                  <p className="text-xs text-purple-200/80 leading-relaxed">
-                    在金流正式上線前的過渡期間，歡迎大家先利用【ATM 銀行轉帳／網銀匯款】或【官方 LINE 專人一對一服務】完成訂購，再次由衷感謝大家的喜愛與耐心等待！
-                  </p>
-                </div>
-              </div>
-
               {/* Official LINE & Email Contact Box */}
               <div className="bg-black/50 p-4 sm:p-5 rounded-xl border border-white/10 space-y-3">
                 <div className="flex items-start gap-3">
@@ -325,6 +300,20 @@ export default function Payment() {
                     客服信箱：poweranimal2212@gmail.com
                   </a>
                 </div>
+              </div>
+
+              {/* Coming Soon: Credit Card Announcement Card */}
+              <div className="bg-gradient-to-r from-purple-950/40 via-blue-950/40 to-black/60 p-4 sm:p-5 rounded-xl border border-purple-400/30 space-y-2">
+                <div>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                    <Sparkles size={13} className="text-yellow-300" />
+                    <span>敬請期待・即將上線</span>
+                  </span>
+                </div>
+                <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                  <CreditCard className="w-5 h-5 text-purple-400" />
+                  <span>線上刷卡支付即將上線！</span>
+                </h3>
               </div>
             </div>
 
