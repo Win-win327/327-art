@@ -4,6 +4,7 @@ import { ChevronRight, ChevronLeft, Minus, Plus, ShoppingBag, Clock, MessageCirc
 import { useCart } from "../context/CartContext";
 import { useLanguage } from "../context/LanguageContext";
 import OptimizedImage from "../components/OptimizedImage";
+import ReturnPolicySection from "../components/common/ReturnPolicySection";
 
 const productData = {
   id: "shirt-unicorn",
@@ -320,6 +321,9 @@ export default function ShirtDetail() {
           </Link>
         </div>
       </div>
+
+      {/* 退換貨須知 */}
+      <ReturnPolicySection className="pb-16" />
     </div>
   );
 }

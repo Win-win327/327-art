@@ -5,6 +5,7 @@ import { submitPreOrder, db } from "../lib/firebase";
 import { doc, getDoc, setDoc, increment } from "firebase/firestore";
 import OptimizedImage from "../components/OptimizedImage";
 import { useLanguage } from "../context/LanguageContext";
+import ReturnPolicySection from "../components/common/ReturnPolicySection";
 
 interface PreOrderProduct {
   id: string;
@@ -644,6 +645,9 @@ export default function PreOrderProductDetail() {
             </div>
           </div>
         </section>
+
+        {/* 退換貨須知 */}
+        <ReturnPolicySection className="mt-16 w-full" />
       </div>
 
     </div>

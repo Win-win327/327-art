@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingBag, Globe, BookOpen, I
 import { useCart } from "../context/CartContext";
 import { useLanguage } from "../context/LanguageContext";
 import OptimizedImage from "../components/OptimizedImage";
+import ReturnPolicySection from "../components/common/ReturnPolicySection";
 
 // 多語言說明書 GIF 動畫圖檔
 const manualGifUrl = "https://i.ibb.co/qLV5w6bH/image.gif";
@@ -501,7 +502,7 @@ export default function ShopDetail() {
       </div>
 
       {/* Add-on product */}
-      <div className="max-w-4xl mx-auto px-5 mb-[100px]">
+      <div className="max-w-4xl mx-auto px-5 mb-16">
         <div className="border-t border-white/20 pt-16">
           <h3 className="text-2xl text-white font-bold tracking-widest mb-8 text-center text-gradient-gold">
             {t("shopdetail.addon_title")}
@@ -531,6 +532,9 @@ export default function ShopDetail() {
           </Link>
         </div>
       </div>
+
+      {/* 退換貨須知 */}
+      <ReturnPolicySection className="pb-16" />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { db } from "../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import OptimizedImage from "../components/OptimizedImage";
 import { useLanguage } from "../context/LanguageContext";
+import ReturnPolicySection from "../components/common/ReturnPolicySection";
 
 const PREORDER_ITEMS = [
   {
@@ -125,6 +126,9 @@ export default function PreOrder() {
           );
         })}
       </div>
+
+      {/* 退換貨須知 */}
+      <ReturnPolicySection className="mt-16 w-full" />
     </div>
   );
 }

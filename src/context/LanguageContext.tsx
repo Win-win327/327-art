@@ -503,7 +503,9 @@ export const translations: Record<Language, Record<string, string>> = {
     "success.btn_home": "返回首頁",
 
     // Footer
-    "footer.rights": "© 2026 327 ART. All Rights Reserved."
+    "footer.rights": "© 2026 327 ART. All Rights Reserved.",
+    "footer.return_policy": "退款換貨須知",
+    "cart.return_policy_note": "享 7 日鑑賞期・查看退款換貨須知"
   },
 
   en: {
@@ -997,7 +999,9 @@ export const translations: Record<Language, Record<string, string>> = {
     "success.btn_home": "Back to Home",
 
     // Footer
-    "footer.rights": "© 2026 327 ART. All Rights Reserved."
+    "footer.rights": "© 2026 327 ART. All Rights Reserved.",
+    "footer.return_policy": "Return & Refund Policy",
+    "cart.return_policy_note": "7-day inspection period・View Return Policy"
   },
 
   ja: {
@@ -1492,7 +1496,9 @@ export const translations: Record<Language, Record<string, string>> = {
     "success.btn_home": "ホームへ戻る",
 
     // Footer
-    "footer.rights": "© 2026 327 ART. All Rights Reserved."
+    "footer.rights": "© 2026 327 ART. All Rights Reserved.",
+    "footer.return_policy": "返品・交換について",
+    "cart.return_policy_note": "7日間安心検品・返品交換規約を見る"
   }
 };
 

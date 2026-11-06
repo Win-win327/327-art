@@ -38,7 +38,32 @@ export default function Footer() {
   };
 
   return (
-    <footer className="p-[60px] md:p-[80px] text-center relative z-10 text-sm tracking-widest select-none">
+    <footer className="p-[50px] md:p-[70px] text-center relative z-10 text-sm tracking-widest select-none">
+      <div className="mb-4 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-400">
+        <Link 
+          to="/cart" 
+          className="hover:text-gold-end transition-colors underline-offset-4 hover:underline"
+        >
+          {t("footer.return_policy", "退款換貨須知")}
+        </Link>
+        <span className="text-white/20">•</span>
+        <a 
+          href="https://line.me/R/ti/p/@327art" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="hover:text-[#06C755] transition-colors"
+        >
+          官方 LINE: @327art
+        </a>
+        <span className="text-white/20">•</span>
+        <a 
+          href="mailto:service@327-art.com" 
+          className="hover:text-gold-end transition-colors underline-offset-4 hover:underline"
+        >
+          service@327-art.com
+        </a>
+      </div>
+
       <p 
         onClick={handleSecretTrigger} 
         className="opacity-50 text-slate-400 cursor-default transition-opacity hover:opacity-75"

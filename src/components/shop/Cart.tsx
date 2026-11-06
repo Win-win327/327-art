@@ -333,6 +333,17 @@ export default function Cart() {
                 {t("cart.checkout", "前往結帳")}
               </Link>
             </div>
+
+            {/* Return Policy Link */}
+            <div className="pt-2 text-center">
+              <Link 
+                to="/cart"
+                onClick={() => setIsCartOpen(false)}
+                className="text-[11px] text-gray-400 hover:text-gold-end transition-colors inline-flex items-center gap-1"
+              >
+                <span>🛡️ {t("cart.return_policy_note", "享 7 日鑑賞期・查看退款換貨須知")}</span>
+              </Link>
+            </div>
           </div>
         )}
       </div>

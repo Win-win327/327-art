@@ -19,6 +19,7 @@ import {
 import { SHIPPING_DESTINATIONS, getDestinationById } from "../config/shipping";
 import { getCartItemTitle, getCartItemSubtitle, getCartSizeLabel } from "../utils/cartHelpers";
 import { useEffect } from "react";
+import ReturnPolicySection from "../components/common/ReturnPolicySection";
 
 export default function CartPage() {
   const { 
@@ -545,6 +546,11 @@ export default function CartPage() {
 
         </div>
       )}
+
+      {/* 退換貨須知 */}
+      <div className="mt-12">
+        <ReturnPolicySection variant="cart" defaultExpanded={true} />
+      </div>
 
     </div>
   );
