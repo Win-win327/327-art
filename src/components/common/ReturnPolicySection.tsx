@@ -154,78 +154,78 @@ export default function ReturnPolicySection({
     ]
   };
 
-  // If rendered as a Cart-specific expandable card
+  // If rendered as a Cart-specific expandable card with light translucent glass background
   if (variant === "cart") {
     return (
-      <div className={`bg-slate-900/60 border border-white/10 rounded-2xl p-5 sm:p-6 backdrop-blur-md shadow-xl ${className}`}>
+      <div className={`bg-white/[0.07] backdrop-blur-md border border-white/20 rounded-2xl p-5 sm:p-6 shadow-xl ${className}`}>
         <button
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-full flex items-center justify-between text-left group cursor-pointer"
         >
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gold-end/10 border border-gold-end/30 flex items-center justify-center text-gold-end">
+            <div className="w-9 h-9 rounded-xl bg-gold-end/20 border border-gold-end/40 flex items-center justify-center text-gold-end shrink-0 shadow-sm">
               <RotateCcw size={18} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-white font-bold tracking-wider text-base sm:text-lg group-hover:text-gold-end transition-colors">
+                <h3 className="text-white font-bold tracking-wider text-base sm:text-lg group-hover:text-gold-end transition-colors drop-shadow-sm">
                   {content.title}
                 </h3>
-                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-gold-end/15 text-gold-end border border-gold-end/30 font-medium">
+                <span className="text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full bg-gold-end/20 text-gold-end border border-gold-end/40 font-semibold shadow-sm">
                   {content.tag}
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-gray-400 mt-0.5 line-clamp-1">
+              <p className="text-xs sm:text-sm text-gray-200 font-medium mt-0.5 line-clamp-1">
                 {content.subtitle}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-1 text-xs text-gold-end/80 font-medium shrink-0 ml-2">
+          <div className="flex items-center gap-1 text-xs text-gold-end font-semibold shrink-0 ml-2">
             <span>{isExpanded ? (isEn ? "Collapse" : "收合") : (isEn ? "View Details" : "查看須知細則")}</span>
             {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </div>
         </button>
 
         {isExpanded && (
-          <div className="mt-5 pt-5 border-t border-white/10 space-y-6 text-sm text-gray-200">
+          <div className="mt-5 pt-5 border-t border-white/15 space-y-6 text-sm text-white">
             {/* Quick Summary Pill Highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-start gap-2.5">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-3 flex items-start gap-2.5 shadow-sm">
                 <Clock size={16} className="text-gold-end shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-white font-semibold text-xs">{isEn ? "7-Day Notice" : "7日鑑賞期"}</div>
-                  <div className="text-gray-400 text-[11px] mt-0.5">{isEn ? "Apply within 7 days of receiving" : "收到次日起算 7 日內提出申請"}</div>
+                  <div className="text-white font-bold text-xs">{isEn ? "7-Day Notice" : "7日鑑賞期"}</div>
+                  <div className="text-gray-200 font-medium text-[11px] mt-0.5">{isEn ? "Apply within 7 days of receiving" : "收到次日起算 7 日內提出申請"}</div>
                 </div>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-start gap-2.5">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-3 flex items-start gap-2.5 shadow-sm">
                 <ShieldCheck size={16} className="text-gold-end shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-white font-semibold text-xs">{isEn ? "Defects Covered" : "瑕疵損毀 100% 換貨"}</div>
-                  <div className="text-gray-400 text-[11px] mt-0.5">{isEn ? "Full round-trip shipping covered" : "一收到毀損或缺漏，運費本店負擔"}</div>
+                  <div className="text-white font-bold text-xs">{isEn ? "Defects Covered" : "瑕疵損毀 100% 換貨"}</div>
+                  <div className="text-gray-200 font-medium text-[11px] mt-0.5">{isEn ? "Full round-trip shipping covered" : "一收到毀損或缺漏，運費本店負擔"}</div>
                 </div>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex items-start gap-2.5">
+              <div className="bg-white/10 border border-white/20 rounded-xl p-3 flex items-start gap-2.5 shadow-sm">
                 <Video size={16} className="text-gold-end shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-white font-semibold text-xs">{isEn ? "Unboxing Video" : "拆封全程錄影"}</div>
-                  <div className="text-gray-400 text-[11px] mt-0.5">{isEn ? "Safeguards both buyer & artist" : "保障雙方權益，迅速為您審核換新"}</div>
+                  <div className="text-white font-bold text-xs">{isEn ? "Unboxing Video" : "拆封全程錄影"}</div>
+                  <div className="text-gray-200 font-medium text-[11px] mt-0.5">{isEn ? "Safeguards both buyer & artist" : "保障雙方權益，迅速為您審核換新"}</div>
                 </div>
               </div>
             </div>
 
-            {/* Eligible vs Non-Eligible */}
+            {/* Eligible vs Non-Eligible (Light Translucent Tinted Cards with High-Contrast White Text) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Eligible */}
-              <div className="bg-emerald-950/20 border border-emerald-500/20 rounded-xl p-4">
-                <div className="flex items-center gap-2 text-emerald-400 font-bold mb-2.5 text-xs sm:text-sm">
-                  <CheckCircle2 size={16} className="shrink-0" />
+              <div className="bg-emerald-500/10 border border-emerald-400/35 rounded-xl p-4 shadow-sm">
+                <div className="flex items-center gap-2 text-emerald-300 font-bold mb-2.5 text-xs sm:text-sm">
+                  <CheckCircle2 size={16} className="shrink-0 text-emerald-400" />
                   <span>{content.eligibleTitle}</span>
                 </div>
-                <ul className="space-y-1.5 text-xs text-gray-300">
+                <ul className="space-y-1.5 text-xs text-white font-medium">
                   {content.eligibleItems.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-1.5">
-                      <span className="text-emerald-400 shrink-0">•</span>
+                      <span className="text-emerald-400 font-bold shrink-0">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -233,15 +233,15 @@ export default function ReturnPolicySection({
               </div>
 
               {/* Non-Eligible */}
-              <div className="bg-rose-950/20 border border-rose-500/20 rounded-xl p-4">
-                <div className="flex items-center gap-2 text-rose-400 font-bold mb-2.5 text-xs sm:text-sm">
-                  <XCircle size={16} className="shrink-0" />
+              <div className="bg-rose-500/10 border border-rose-400/35 rounded-xl p-4 shadow-sm">
+                <div className="flex items-center gap-2 text-rose-300 font-bold mb-2.5 text-xs sm:text-sm">
+                  <XCircle size={16} className="shrink-0 text-rose-400" />
                   <span>{content.nonEligibleTitle}</span>
                 </div>
-                <ul className="space-y-1.5 text-xs text-gray-300">
+                <ul className="space-y-1.5 text-xs text-white font-medium">
                   {content.nonEligibleItems.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-1.5">
-                      <span className="text-rose-400 shrink-0">•</span>
+                      <span className="text-rose-400 font-bold shrink-0">•</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -249,7 +249,7 @@ export default function ReturnPolicySection({
               </div>
             </div>
 
-            {/* 4-Step Process Bar */}
+            {/* 4-Step Process Bar with Light Translucent Step Cards */}
             <div>
               <h4 className="text-xs font-bold text-gold-end tracking-wider mb-3 flex items-center gap-1.5">
                 <RotateCcw size={14} />
@@ -257,20 +257,20 @@ export default function ReturnPolicySection({
               </h4>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {content.steps.map((s, idx) => (
-                  <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-gold-end/20 text-gold-end font-mono">
+                  <div key={idx} className="bg-white/10 hover:bg-white/15 border border-white/20 rounded-xl p-3 text-center transition-colors shadow-sm">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-gold-end/20 text-gold-end font-mono border border-gold-end/30">
                       Step {s.step}
                     </span>
                     <div className="text-white font-bold text-xs mt-1.5">{s.title}</div>
-                    <div className="text-gold-end/80 text-[10px] font-medium mt-0.5">{s.time}</div>
-                    <div className="text-[11px] text-gray-400 mt-1 leading-tight line-clamp-3">{s.desc}</div>
+                    <div className="text-gold-end text-[10px] font-semibold mt-0.5">{s.time}</div>
+                    <div className="text-[11px] text-gray-200 font-medium mt-1 leading-normal line-clamp-3">{s.desc}</div>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Contact Footer */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/10 text-xs text-gray-400">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-white/15 text-xs text-gray-200 font-medium">
               <div className="flex items-center gap-2">
                 <HelpCircle size={14} className="text-gold-end shrink-0" />
                 <span>{isEn ? "Questions? Contact 327 ART Support:" : "若對退換貨流程有任何疑問，歡迎隨時聯繫客服："}</span>
@@ -280,14 +280,14 @@ export default function ReturnPolicySection({
                   href="https://line.me/R/ti/p/@327art" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-[#06C755] hover:underline font-semibold"
+                  className="inline-flex items-center gap-1 text-[#06C755] hover:underline font-bold"
                 >
                   <MessageCircle size={13} /> LINE: @327art
                 </a>
-                <span className="text-white/20">|</span>
+                <span className="text-white/30">|</span>
                 <a 
                   href="mailto:service@327-art.com"
-                  className="inline-flex items-center gap-1 text-gold-end hover:underline"
+                  className="inline-flex items-center gap-1 text-gold-end hover:underline font-semibold"
                 >
                   <Mail size={13} /> service@327-art.com
                 </a>
@@ -300,36 +300,37 @@ export default function ReturnPolicySection({
     );
   }
 
-  // Default: Full detailed presentation for Product Pages and PreOrder pages
+  // Default: Full detailed presentation with light translucent glass background matching upper sections
   return (
     <section className={`w-full max-w-5xl mx-auto px-4 sm:px-6 my-16 ${className}`} aria-label="Return Policy">
-      <div className="bg-slate-900/70 border border-white/15 rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+      {/* Light translucent glass container, exactly matching the aesthetic of the upper cards */}
+      <div className="bg-white/[0.06] backdrop-blur-md border border-white/20 rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl relative overflow-hidden">
         
-        {/* Glow ambient decoration */}
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-gold-end/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        {/* Subtle warm glow ambient decoration */}
+        <div className="absolute top-0 right-1/4 w-80 h-80 bg-gold-end/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-cyan-400/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-end/10 border border-gold-end/30 text-gold-end text-xs sm:text-sm font-medium tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-gold-end/15 border border-gold-end/40 text-gold-end text-xs sm:text-sm font-semibold tracking-widest mb-4 shadow-sm">
             <RotateCcw size={14} />
             <span>{content.tag}</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-widest text-gradient-gold mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-widest text-gradient-gold mb-3 drop-shadow-md">
             {content.title}
           </h2>
-          <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-gray-100 font-medium leading-relaxed max-w-2xl mx-auto drop-shadow-sm">
             {content.subtitle}
           </p>
         </div>
 
-        {/* Section 1: Pre-Purchase & Application Notice */}
-        <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-5 sm:p-7 mb-8 relative z-10">
+        {/* Section 1: Pre-Purchase & Application Notice (Light Frosted Card) */}
+        <div className="bg-white/10 border border-white/20 rounded-2xl p-5 sm:p-7 mb-8 relative z-10 shadow-sm">
           <div className="flex items-center gap-2.5 text-gold-end font-bold text-base sm:text-lg mb-3">
             <AlertCircle size={20} className="shrink-0" />
             <h3>{content.preNoticeTitle}</h3>
           </div>
-          <div className="space-y-2.5 text-sm sm:text-base text-gray-200 leading-relaxed">
+          <div className="space-y-3 text-sm sm:text-base text-white font-medium leading-relaxed">
             <p className="flex items-start gap-2">
               <span className="text-gold-end font-bold shrink-0">▸</span>
               <span>{content.preNoticeP1}</span>
@@ -345,20 +346,20 @@ export default function ReturnPolicySection({
           </div>
         </div>
 
-        {/* Section 2: Eligible vs Non-Eligible Services (Comparison Cards) */}
+        {/* Section 2: Eligible vs Non-Eligible Services (Comparison Cards with Light Translucent Tint) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 relative z-10">
           
           {/* Eligible */}
-          <div className="bg-emerald-950/20 border border-emerald-500/25 rounded-2xl p-6 sm:p-7 shadow-lg flex flex-col justify-between">
+          <div className="bg-emerald-500/10 border border-emerald-400/35 rounded-2xl p-6 sm:p-7 shadow-md flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-2.5 text-emerald-400 font-bold text-lg mb-4">
-                <CheckCircle2 size={22} className="shrink-0" />
+              <div className="flex items-center gap-2.5 text-emerald-300 font-bold text-lg mb-4">
+                <CheckCircle2 size={22} className="shrink-0 text-emerald-400" />
                 <h3>{content.eligibleTitle}</h3>
               </div>
-              <ul className="space-y-3 text-sm sm:text-base text-gray-200">
+              <ul className="space-y-3 text-sm sm:text-base text-white font-medium">
                 {content.eligibleItems.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-emerald-500/25 text-emerald-300 text-xs flex items-center justify-center shrink-0 mt-0.5 font-bold">
                       ✓
                     </span>
                     <span className="leading-relaxed">{item}</span>
@@ -366,23 +367,23 @@ export default function ReturnPolicySection({
                 ))}
               </ul>
             </div>
-            <div className="mt-5 pt-4 border-t border-emerald-500/20 text-xs text-emerald-300/90 flex items-center gap-1.5">
-              <ShieldCheck size={14} className="shrink-0" />
+            <div className="mt-6 pt-4 border-t border-emerald-400/30 text-xs sm:text-sm text-emerald-200 font-semibold flex items-center gap-1.5">
+              <ShieldCheck size={16} className="shrink-0 text-emerald-400" />
               <span>{isEn ? "All return shipping fees for defects are covered by 327 ART." : "若為瑕疵或寄錯，來回運費均由本商店全額負擔。"}</span>
             </div>
           </div>
 
           {/* Non-Eligible */}
-          <div className="bg-rose-950/20 border border-rose-500/25 rounded-2xl p-6 sm:p-7 shadow-lg flex flex-col justify-between">
+          <div className="bg-rose-500/10 border border-rose-400/35 rounded-2xl p-6 sm:p-7 shadow-md flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-2.5 text-rose-400 font-bold text-lg mb-4">
-                <XCircle size={22} className="shrink-0" />
+              <div className="flex items-center gap-2.5 text-rose-300 font-bold text-lg mb-4">
+                <XCircle size={22} className="shrink-0 text-rose-400" />
                 <h3>{content.nonEligibleTitle}</h3>
               </div>
-              <ul className="space-y-3 text-sm sm:text-base text-gray-200">
+              <ul className="space-y-3 text-sm sm:text-base text-white font-medium">
                 {content.nonEligibleItems.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-rose-500/20 text-rose-300 text-xs flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="w-5 h-5 rounded-full bg-rose-500/25 text-rose-300 text-xs flex items-center justify-center shrink-0 mt-0.5 font-bold">
                       ✕
                     </span>
                     <span className="leading-relaxed">{item}</span>
@@ -390,22 +391,22 @@ export default function ReturnPolicySection({
                 ))}
               </ul>
             </div>
-            <div className="mt-5 pt-4 border-t border-rose-500/20 text-xs text-rose-300/90 flex items-center gap-1.5">
-              <AlertCircle size={14} className="shrink-0" />
+            <div className="mt-6 pt-4 border-t border-rose-400/30 text-xs sm:text-sm text-rose-200 font-semibold flex items-center gap-1.5">
+              <AlertCircle size={16} className="shrink-0 text-rose-400" />
               <span>{isEn ? "Personal reasons on custom or unsealed goods cannot be refunded." : "客製化、已拆封商品因個人因素恕無法申請退款。"}</span>
             </div>
           </div>
 
         </div>
 
-        {/* Section 3: 4-Step Standard Workflow */}
-        <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 sm:p-8 mb-8 relative z-10">
+        {/* Section 3: 4-Step Standard Workflow (Light Translucent Frosted Glass Cards) */}
+        <div className="bg-white/[0.08] border border-white/20 rounded-2xl p-6 sm:p-8 mb-8 relative z-10 shadow-sm">
           <div className="text-center mb-6">
-            <h3 className="text-xl sm:text-2xl font-bold tracking-widest text-gold-end flex items-center justify-center gap-2">
+            <h3 className="text-xl sm:text-2xl font-bold tracking-widest text-gold-end flex items-center justify-center gap-2 drop-shadow-sm">
               <RotateCcw size={20} />
               <span>{content.workflowTitle}</span>
             </h3>
-            <p className="text-xs sm:text-sm text-gray-400 mt-1">
+            <p className="text-xs sm:text-sm text-gray-200 font-medium mt-1">
               {isEn ? "Clear 4-step process with 3-business-day response guarantee" : "每階段承諾 3 個工作天內專人處理，公開透明安心無虞"}
             </p>
           </div>
@@ -414,21 +415,21 @@ export default function ReturnPolicySection({
             {content.steps.map((step, idx) => (
               <div 
                 key={idx} 
-                className="bg-black/40 border border-white/10 rounded-xl p-4 sm:p-5 flex flex-col justify-between hover:border-gold-end/40 transition-colors shadow-inner"
+                className="bg-white/10 hover:bg-white/15 border border-white/20 rounded-xl p-4 sm:p-5 flex flex-col justify-between hover:border-gold-end/50 transition-all shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-2xl font-bold font-mono text-gold-end opacity-80">
+                    <span className="text-2xl font-bold font-mono text-gold-end">
                       {step.step}
                     </span>
-                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-gold-end/15 text-gold-end font-medium border border-gold-end/30">
+                    <span className="text-[11px] px-2 py-0.5 rounded-full bg-gold-end/20 text-gold-end font-semibold border border-gold-end/35">
                       {step.time}
                     </span>
                   </div>
                   <h4 className="text-white font-bold text-base mb-2">
                     {step.title}
                   </h4>
-                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-100 font-medium leading-relaxed">
                     {step.desc}
                   </p>
                 </div>
@@ -442,12 +443,12 @@ export default function ReturnPolicySection({
           {content.tips.map((tip, idx) => {
             const Icon = tip.icon;
             return (
-              <div key={idx} className="bg-white/[0.04] border border-white/10 rounded-xl p-5 flex flex-col">
+              <div key={idx} className="bg-white/10 border border-white/20 rounded-xl p-5 flex flex-col shadow-sm hover:bg-white/15 transition-colors">
                 <div className="flex items-center gap-2 text-gold-end font-bold text-sm sm:text-base mb-2">
                   <Icon size={18} className="shrink-0" />
                   <h4>{tip.title}</h4>
                 </div>
-                <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-gray-100 font-medium leading-relaxed">
                   {tip.desc}
                 </p>
               </div>
@@ -456,12 +457,12 @@ export default function ReturnPolicySection({
         </div>
 
         {/* Footer Support Banner */}
-        <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left relative z-10">
+        <div className="mt-8 pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left relative z-10">
           <div>
-            <div className="text-white font-bold text-sm tracking-wider">
+            <div className="text-white font-bold text-sm sm:text-base tracking-wider">
               {isEn ? "Have questions before placing an order?" : "購買前有任何疑慮或特殊需求？"}
             </div>
-            <div className="text-xs text-gray-400 mt-0.5">
+            <div className="text-xs sm:text-sm text-gray-200 font-medium mt-0.5">
               {isEn ? "Feel free to message our official team anytime." : "歡迎於下單前聯繫 327 ART 客服，我們將竭誠為您解答。"}
             </div>
           </div>
@@ -470,14 +471,14 @@ export default function ReturnPolicySection({
               href="https://line.me/R/ti/p/@327art" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#06C755]/15 border border-[#06C755]/40 text-[#06C755] hover:bg-[#06C755] hover:text-white transition-all text-xs sm:text-sm font-bold shadow-md"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#06C755]/20 border border-[#06C755]/50 text-white hover:bg-[#06C755] transition-all text-xs sm:text-sm font-bold shadow-md"
             >
               <MessageCircle size={16} />
               <span>官方 LINE: @327art</span>
             </a>
             <a 
               href="mailto:service@327-art.com"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gold-end/15 border border-gold-end/40 text-gold-end hover:bg-gold-end hover:text-black transition-all text-xs sm:text-sm font-bold shadow-md"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gold-end/20 border border-gold-end/50 text-gold-end hover:bg-gold-end hover:text-black transition-all text-xs sm:text-sm font-bold shadow-md"
             >
               <Mail size={16} />
               <span>service@327-art.com</span>
