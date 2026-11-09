@@ -86,7 +86,7 @@ export default function PageSEO() {
     setMetaTag("property", "og:locale", localeMap[language] || "zh_TW");
     setMetaTag("property", "og:title", activeTitle);
     setMetaTag("property", "og:description", activeDescription);
-    setMetaTag("property", "og:url", `https://327-art.com${path === "/" ? "" : path}`);
+    setMetaTag("property", "og:url", `https://327-art.com${path === "/" ? "/" : path}`);
     setMetaTag("name", "twitter:title", activeTitle);
     setMetaTag("name", "twitter:description", activeDescription);
 
@@ -107,7 +107,7 @@ export default function PageSEO() {
       canonical.setAttribute("rel", "canonical");
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute("href", `https://327-art.com${path === "/" ? "" : path}`);
+    canonical.setAttribute("href", `https://327-art.com${path === "/" ? "/" : path}`);
   }, [location.pathname, language, config]);
 
   return null;

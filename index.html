@@ -8,8 +8,16 @@
     <meta name="description" content="探索台灣當代藝術家張景雯 Win 創立之 327 ART 充滿魔法與奇蹟的藝術世界。提供極光動物魔法卡、原創周邊與藝術作品集。" />
     <meta name="keywords" content="327 ART, 奇蹟之筆, 極光動物魔法卡, 力量動物, 神諭卡, 動物牌卡, 靈性牌卡, 現代藝術, 油畫, 壓克力, 極光畫, 潑彩藝術, 原創周邊, T-shirt, 預購商品, 張景雯, 張景雯 Win, Win, Aurora Magical Animal Cards" />
     <meta name="author" content="張景雯 Win (327 ART 奇蹟之筆)" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://327-art.com/" />
+    <!-- 標準網址（依造訪子頁面動態指定自身標準網址，避免 Google 將子頁面誤判為首頁之替代頁面） -->
+    <script>
+      (function() {
+        var p = window.location.pathname;
+        var c = document.createElement('link');
+        c.rel = 'canonical';
+        c.href = 'https://327-art.com' + (p === '/' ? '/' : (p.endsWith('/') ? p.slice(0, -1) : p));
+        document.head.appendChild(c);
+      })();
+    </script>
 
     <!-- Favicon 網站圖示（供 Google 搜尋結果、瀏覽器分頁、手機主畫面） -->
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />

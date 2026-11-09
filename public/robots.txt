@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
+Allow: /pre-order
+Allow: /pre-order/
+Allow: /shop/
+Allow: /portfolio
+Allow: /about
 Disallow: /admin
 Disallow: /wish-pool
 Disallow: /checkout
