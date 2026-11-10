@@ -12,9 +12,7 @@ import {
   ChevronUp, 
   Compass, 
   Heart,
-  AlertCircle,
-  HelpCircle,
-  Flame
+  AlertCircle
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { useCart } from "../context/CartContext";
@@ -208,7 +206,7 @@ export default function CardDraw() {
       </div>
 
       {/* ============================================================ */}
-      {/* STAGE 1: INTRO & TRANSLUCENT HAND INQUIRY OVER CARD BACK     */}
+      {/* STAGE 1: INTRO & TRANSLUCENT HANDS HOLDING CARD AT EDGES     */}
       {/* ============================================================ */}
       {gameState === "intro" && (
         <div className="max-w-2xl w-full text-center space-y-8 animate-fadeIn">
@@ -222,140 +220,178 @@ export default function CardDraw() {
             {isEn ? "Aurora Oracle Sanctuary" : isJa ? "極光の聖域・オンライン抽牌" : "極光動物魔法卡・線上抽牌"}
           </h1>
 
+          {/* Original poetic description restored exactly as user requested */}
+          <p className="text-sm sm:text-base text-gray-200 leading-relaxed max-w-xl mx-auto font-medium">
+            {isEn 
+              ? "Every living creature holds a unique frequency. Close your eyes, take a deep breath, and connect with your inner animal guardian."
+              : isJa
+              ? "万物には固有の波長が存在します。目を閉じ、深呼吸をし、今この瞬間にあなたを導く動物と繋がってください。"
+              : "每一隻生靈，都是宇宙賜予的一面鏡子。閉上雙眼，深呼吸，在心中默念你近期的期盼、困惑或想探索的議題。"}
+          </p>
+
           {/* ============================================================ */}
-          {/* THE CARD BACK WITH TRANSLUCENT GAMING HAND OVERLAY           */}
+          {/* THE CARD BACK WITH TRANSLUCENT HANDS CRADLING THE EDGES      */}
           {/* ============================================================ */}
           <div className="py-2 flex flex-col items-center justify-center">
             
+            {/* Outer Stage: Sized so hands cradle the sides without blocking lion */}
             <div 
               onMouseEnter={() => setIsHandHovered(true)}
               onMouseLeave={() => setIsHandHovered(false)}
-              className="relative w-[210px] sm:w-[250px] aspect-[1/1.52] rounded-2xl overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.8),0_0_25px_rgba(250,204,21,0.25)] border-2 border-amber-300/80 group cursor-pointer transition-transform duration-500 hover:scale-[1.02]"
-              title="將心念放在牌卡上，向守護動物提問"
+              className="relative w-[240px] sm:w-[280px] aspect-[1/1.52] group cursor-pointer transition-transform duration-500 hover:scale-[1.02]"
+              title="雙手捧持牌卡，向守護動物提問"
             >
-              {/* Authentic Physical Card Back Photo (Win Lion Painting) */}
-              <img 
-                src="/images/cards/card-back.png" 
-                alt="極光動物魔法卡牌背 - 張景雯 Win 原創繪製" 
-                className="w-full h-full object-cover select-none"
-              />
+              {/* Card Container with rounded corners and authentic physical photo */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.85),0_0_30px_rgba(250,204,21,0.25)] border-2 border-amber-300/80 bg-[#0A1128]">
+                {/* Authentic Physical Card Back Photo (Win Lion Painting - 100% UNBLOCKED) */}
+                <img 
+                  src="/images/cards/card-back.png" 
+                  alt="極光動物魔法卡牌背 - 張景雯 Win 原創繪製" 
+                  className="w-full h-full object-cover select-none"
+                />
 
-              {/* Ambient Radiant Energy Halo */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                {/* Ambient Radiant Energy Halo */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+              </div>
 
-              {/* Pulsing Concentric Aura Ripples under Palm */}
-              <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full border border-cyan-400/30 animate-ping pointer-events-none" style={{ animationDuration: "3s" }} />
-              <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 rounded-full border border-amber-300/20 animate-pulse pointer-events-none" style={{ animationDuration: "2s" }} />
+              {/* Pulsing Concentric Aura Ripples under Card Edges */}
+              <div className="absolute -inset-4 rounded-3xl border border-cyan-400/20 animate-ping pointer-events-none" style={{ animationDuration: "3.5s" }} />
+              <div className="absolute -inset-2 rounded-2xl border border-amber-300/25 animate-pulse pointer-events-none" style={{ animationDuration: "2.2s" }} />
 
-              {/* TRANSLUCENT GAMING HAND OVERLAY (Attuning to the Oracle Card) */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-500">
+              {/* ======================================================= */}
+              {/* TRANSLUCENT HANDS HOLDING THE SIDES (CENTER IS CLEAR!)  */}
+              {/* ======================================================= */}
+              <div className="absolute inset-0 pointer-events-none">
                 <svg 
-                  viewBox="0 0 300 420" 
-                  className={`w-full h-full transition-opacity duration-500 drop-shadow-[0_0_20px_rgba(250,204,21,0.65)] ${
-                    isHandHovered ? "opacity-95 scale-[1.03]" : "opacity-80 scale-100 animate-[pulse_4s_ease-in-out_infinite]"
+                  viewBox="0 0 320 486" 
+                  className={`w-full h-full transition-all duration-500 drop-shadow-[0_0_18px_rgba(250,204,21,0.6)] ${
+                    isHandHovered ? "opacity-95 scale-[1.01]" : "opacity-85 animate-[pulse_4s_ease-in-out_infinite]"
                   }`}
                 >
                   <defs>
-                    {/* Ethereal Translucent Hand Gradient Fill */}
-                    <linearGradient id="etherealHandFill" x1="20%" y1="100%" x2="50%" y2="0%">
+                    {/* Left Hand Translucent Gradient */}
+                    <linearGradient id="handLeftGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                       <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.25" />
-                      <stop offset="45%" stopColor="#818cf8" stopOpacity="0.4" />
-                      <stop offset="75%" stopColor="#fde047" stopOpacity="0.55" />
-                      <stop offset="100%" stopColor="#ffffff" stopOpacity="0.8" />
+                      <stop offset="50%" stopColor="#818cf8" stopOpacity="0.45" />
+                      <stop offset="85%" stopColor="#fde047" stopOpacity="0.65" />
+                      <stop offset="100%" stopColor="#ffffff" stopOpacity="0.85" />
                     </linearGradient>
 
-                    {/* Glowing Contour Stroke */}
-                    <linearGradient id="etherealHandStroke" x1="0%" y1="100%" x2="0%" y2="0%">
+                    {/* Right Hand Translucent Gradient */}
+                    <linearGradient id="handRightGrad" x1="100%" y1="100%" x2="0%" y2="0%">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.25" />
+                      <stop offset="50%" stopColor="#818cf8" stopOpacity="0.45" />
+                      <stop offset="85%" stopColor="#fde047" stopOpacity="0.65" />
+                      <stop offset="100%" stopColor="#ffffff" stopOpacity="0.85" />
+                    </linearGradient>
+
+                    {/* Luminous Contour Stroke */}
+                    <linearGradient id="handBorderStroke" x1="0%" y1="100%" x2="0%" y2="0%">
                       <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.5" />
                       <stop offset="50%" stopColor="#67e8f9" stopOpacity="0.85" />
                       <stop offset="85%" stopColor="#fef08a" stopOpacity="0.95" />
                       <stop offset="100%" stopColor="#ffffff" stopOpacity="1" />
                     </linearGradient>
 
-                    {/* Palm Energy Core */}
-                    <radialGradient id="energyCore" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-                      <stop offset="35%" stopColor="#fde047" stopOpacity="0.8" />
-                      <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.35" />
-                      <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
-                    </radialGradient>
-
-                    <filter id="etherealGlow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feGaussianBlur stdDeviation="3.5" result="blur" />
+                    <filter id="cradleGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="3" result="blur" />
                       <feComposite in="SourceGraphic" in2="blur" operator="over" />
                     </filter>
                   </defs>
 
-                  {/* Concentric mystical rings at palm contact point (150, 240) */}
-                  <circle cx="150" cy="240" r="26" fill="none" stroke="#fde047" strokeWidth="1.5" strokeDasharray="4 3" className="origin-[150px_240px] animate-[spin_12s_linear_infinite] opacity-70" />
-                  <circle cx="150" cy="240" r="44" fill="none" stroke="#38bdf8" strokeWidth="1" strokeDasharray="6 4" className="origin-[150px_240px] animate-[spin_20s_linear_infinite_reverse] opacity-50" />
-                  <circle cx="150" cy="240" r="14" fill="url(#energyCore)" className="animate-pulse" />
+                  {/* LEFT HAND: Gently cupping the left edge of the card */}
+                  <g className="transition-all duration-300">
+                    {/* Hand Silhouette: Wrist at bottom-left, thumb & fingers resting on outer gold border */}
+                    <path
+                      d="M -6 480 
+                         C 8 430, 18 385, 22 340 
+                         C 25 305, 26 270, 32 240 
+                         C 35 226, 42 222, 45 228 
+                         C 48 235, 45 248, 40 265 
+                         C 36 278, 38 290, 44 295 
+                         C 50 300, 52 292, 53 280 
+                         C 55 264, 57 248, 59 242 
+                         C 62 235, 68 235, 69 242 
+                         C 70 250, 66 268, 62 290 
+                         C 58 312, 59 332, 55 350 
+                         C 47 385, 30 435, 14 485 
+                         Z"
+                      fill="url(#handLeftGrad)"
+                      stroke="url(#handBorderStroke)"
+                      strokeWidth="2.2"
+                      filter="url(#cradleGlow)"
+                      className="backdrop-blur-[1px]"
+                    />
 
-                  {/* Sacred Geom Rune on Palm */}
-                  <polygon points="150,222 165,248 135,248" fill="none" stroke="#fef08a" strokeWidth="1.2" className="opacity-80" />
-                  <polygon points="150,256 165,230 135,230" fill="none" stroke="#67e8f9" strokeWidth="1.2" className="opacity-80" />
-                  <circle cx="150" cy="239" r="4" fill="#ffffff" />
+                    {/* Subtle energy nodes on left fingertips */}
+                    <circle cx="44" cy="230" r="3" fill="#fef08a" className="animate-pulse" />
+                    <circle cx="68" cy="244" r="3" fill="#67e8f9" className="animate-pulse" />
+                    <circle cx="42" cy="285" r="2.5" fill="#ffffff" className="animate-ping" style={{ animationDuration: "2.8s" }} />
+                  </g>
 
-                  {/* Elegant Stylized Translucent Hand (Fingers resting forward over card) */}
+                  {/* RIGHT HAND: Gently cupping the right edge of the card */}
+                  <g className="transition-all duration-300">
+                    {/* Hand Silhouette: Wrist at bottom-right, thumb & fingers resting on outer gold border */}
+                    <path
+                      d="M 326 480 
+                         C 312 430, 302 385, 298 340 
+                         C 295 305, 294 270, 288 240 
+                         C 285 226, 278 222, 275 228 
+                         C 272 235, 275 248, 280 265 
+                         C 284 278, 282 290, 276 295 
+                         C 270 300, 268 292, 267 280 
+                         C 265 264, 263 248, 261 242 
+                         C 258 235, 252 235, 251 242 
+                         C 250 250, 254 268, 258 290 
+                         C 262 312, 261 332, 265 350 
+                         C 273 385, 290 435, 306 485 
+                         Z"
+                      fill="url(#handRightGrad)"
+                      stroke="url(#handBorderStroke)"
+                      strokeWidth="2.2"
+                      filter="url(#cradleGlow)"
+                      className="backdrop-blur-[1px]"
+                    />
+
+                    {/* Subtle energy nodes on right fingertips */}
+                    <circle cx="276" cy="230" r="3" fill="#fef08a" className="animate-pulse" />
+                    <circle cx="252" cy="244" r="3" fill="#67e8f9" className="animate-pulse" />
+                    <circle cx="278" cy="285" r="2.5" fill="#ffffff" className="animate-ping" style={{ animationDuration: "2.8s" }} />
+                  </g>
+
+                  {/* Mystical Energy Arcs Wrapping Gently Around Bottom of Card */}
                   <path
-                    d="M 120 410 
-                       C 114 365, 106 325, 100 285
-                       C 88 268, 72 250, 60 228
-                       C 50 210, 48 185, 56 178
-                       C 64 170, 78 182, 90 205
-                       C 98 220, 105 235, 112 242
-                       C 111 210, 108 145, 110 105
-                       C 112 92, 122 88, 128 90
-                       C 134 92, 137 102, 136 122
-                       C 135 152, 134 208, 136 224
-                       C 140 192, 145 125, 149 80
-                       C 151 68, 161 65, 167 67
-                       C 173 69, 176 80, 174 100
-                       C 172 136, 169 192, 171 226
-                       C 177 202, 185 150, 191 110
-                       C 193 98, 203 95, 209 98
-                       C 215 101, 216 112, 213 128
-                       C 209 164, 202 215, 203 242
-                       C 212 228, 224 186, 234 160
-                       C 238 150, 248 148, 253 153
-                       C 257 158, 255 170, 247 186
-                       C 235 214, 221 254, 212 282
-                       C 204 312, 196 360, 192 410
-                       Z"
-                    fill="url(#etherealHandFill)"
-                    stroke="url(#etherealHandStroke)"
-                    strokeWidth="2.2"
-                    filter="url(#etherealGlow)"
+                    d="M 30 400 Q 160 475 290 400"
+                    fill="none"
+                    stroke="#fde047"
+                    strokeWidth="1.5"
+                    strokeDasharray="4 4"
+                    className="opacity-75 animate-pulse"
                   />
-
-                  {/* Ethereal Palm Energy Lines */}
-                  <path d="M 106 242 Q 148 256 182 272" fill="none" stroke="#fde047" strokeWidth="1.5" strokeDasharray="2 3" className="opacity-70" />
-                  <path d="M 116 264 Q 152 278 178 308" fill="none" stroke="#67e8f9" strokeWidth="1.2" className="opacity-60" />
-                  <path d="M 130 224 Q 148 248 154 298" fill="none" stroke="#fde047" strokeWidth="1.2" className="opacity-60" />
-
-                  {/* Luminous Light Nodes on Fingertips */}
-                  <circle cx="58" cy="180" r="3.5" fill="#fef08a" className="animate-pulse" />
-                  <circle cx="120" cy="94" r="3.5" fill="#fef08a" className="animate-pulse" />
-                  <circle cx="158" cy="70" r="4.5" fill="#ffffff" className="animate-ping" style={{ animationDuration: "2s" }} />
-                  <circle cx="202" cy="100" r="3.5" fill="#fef08a" className="animate-pulse" />
-                  <circle cx="246" cy="158" r="3" fill="#67e8f9" className="animate-pulse" />
+                  <path
+                    d="M 45 425 Q 160 488 275 425"
+                    fill="none"
+                    stroke="#38bdf8"
+                    strokeWidth="1.2"
+                    strokeDasharray="6 6"
+                    className="opacity-60"
+                  />
+                  {/* Floating starlight particles at bottom center */}
+                  <circle cx="160" cy="455" r="3" fill="#ffffff" className="animate-ping" style={{ animationDuration: "2.2s" }} />
                 </svg>
               </div>
 
-              {/* Inquiry Prompt Tag on Hover */}
-              <div className="absolute bottom-3 inset-x-3 py-1 px-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/20 text-[11px] text-amber-200 tracking-wider text-center pointer-events-none">
-                ✦ 向神獸守護者提問 ✦
+              {/* Inquiry Tag */}
+              <div className="absolute bottom-3 inset-x-5 py-1 px-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/20 text-[11px] text-amber-200 tracking-wider text-center pointer-events-none">
+                ✦ 雙手捧持牌卡・向神獸守護者提問 ✦
               </div>
             </div>
 
-            {/* Instruction under the card */}
-            <p className="text-xs sm:text-sm text-gray-300 mt-3 font-medium tracking-wide">
-              {isEn 
-                ? "Close your eyes, place your hand over the card, and hold your question in your heart."
-                : isJa
-                ? "目を閉じ、カードに手をかざすように心を静め、あなたの問いを念じてください。"
-                : "閉上雙眼，如撫摸牌面般調和呼吸，在心中默念你所面臨的提問或期盼"}
-            </p>
+            {/* Subtle Hint */}
+            <div className="text-xs text-amber-300/90 font-medium tracking-widest mt-3 flex items-center gap-1.5">
+              <Sparkles size={13} className="text-gold-end" />
+              <span>{isEn ? "Hold the card in your heart & ask your question" : "心念合一・專注感應當下的提問"}</span>
+            </div>
           </div>
 
           {/* ============================================================ */}
@@ -423,7 +459,7 @@ export default function CardDraw() {
 
           </div>
 
-          {/* Golden Start Button */}
+          {/* Golden Start Button (Clean, without parenthetical quota count!) */}
           <div className="pt-2">
             <button
               type="button"
@@ -437,8 +473,8 @@ export default function CardDraw() {
               <Sparkles size={20} className="animate-spin text-inherit" style={{ animationDuration: "6s" }} />
               <span>
                 {remainingFreeDraws > 0 
-                  ? `開始感應洗牌 (剩餘 ${remainingFreeDraws} 次)` 
-                  : "今日免費次數已用完"}
+                  ? (isEn ? "Begin Shuffling Cards" : isJa ? "カードをシャッフルする" : "開始感應洗牌") 
+                  : (isEn ? "Daily Limit Reached" : "今日免費次數已用完")}
               </span>
             </button>
           </div>
@@ -743,7 +779,7 @@ export default function CardDraw() {
                 className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-sm tracking-wider transition-all cursor-pointer flex items-center gap-2"
               >
                 <RotateCcw size={16} />
-                <span>{remainingFreeDraws > 0 ? `再抽一張 (${remainingFreeDraws})` : "返回首頁"}</span>
+                <span>{remainingFreeDraws > 0 ? "再抽一張" : "返回首頁"}</span>
               </button>
             </div>
           </div>
