@@ -13,6 +13,7 @@ import ArtDetail from "./pages/ArtDetail";
 import Checkout from "./pages/Checkout";
 import Payment from "./pages/Payment";
 import OrderSuccess from "./pages/OrderSuccess";
+import CardDraw from "./pages/CardDraw";
 import { CartProvider } from "./context/CartContext";
 import { LanguageProvider } from "./context/LanguageContext";
 import Cart from "./components/shop/Cart";
@@ -58,6 +59,8 @@ export default function App() {
                 <Route path="/portfolio" element={<Portfolio />} />
                 <Route path="/portfolio/:id" element={<ArtDetail />} />
                 <Route path="/shop/magic-cards" element={<ShopDetail />} />
+                <Route path="/draw" element={<CardDraw />} />
+                <Route path="/shop/magic-cards/draw" element={<CardDraw />} />
                 <Route path="/shop/t-shirt" element={<ShirtDetail />} />
                 <Route path="/wish-pool" element={<WishPool />} />
                 <Route path="/pre-order" element={<PreOrder />} />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingBag, Globe, BookOpen, Image as ImageIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingBag, Globe, BookOpen, Image as ImageIcon, Sparkles } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useLanguage } from "../context/LanguageContext";
 import OptimizedImage from "../components/OptimizedImage";
@@ -251,6 +251,18 @@ export default function ShopDetail() {
             >
               {t("shopdetail.buy_now")}
             </button>
+
+            {/* 線上免費抽牌體驗按鈕 */}
+            <Link
+              to="/draw"
+              className="w-full py-3.5 mt-1 rounded-xl border border-amber-300/50 bg-gradient-to-r from-amber-500/15 via-yellow-400/20 to-amber-500/15 hover:from-amber-500/30 hover:to-amber-500/30 text-amber-200 hover:text-white font-bold tracking-[2px] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-amber-500/10 group cursor-pointer"
+            >
+              <Sparkles size={18} className="text-gold-end group-hover:rotate-12 transition-transform" />
+              <span>{t("shopdetail.free_draw_btn", "線上免費抽牌體驗・遇見守護動物")}</span>
+              <span className="text-[10px] bg-gold-end text-black px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                FREE
+              </span>
+            </Link>
           </div>
         </div>
       </div>
