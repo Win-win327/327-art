@@ -122,6 +122,7 @@ export default function CardDraw() {
   const [showManualModal, setShowManualModal] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [isFlipped, setIsFlipped] = useState(false);
+  const [revealPhase, setRevealPhase] = useState<"card-back" | "brush-enter" | "aurora-expand" | "card-reveal">("card-back");
   const [isHandHovered, setIsHandHovered] = useState(false);
   const [showQuotaModal, setShowQuotaModal] = useState(false);
 
@@ -224,15 +225,30 @@ export default function CardDraw() {
 
     setSelectedCards([picked]);
     setGameState("flipping");
+    setRevealPhase("card-back");
 
-    // 3D Flip after a short cinematic pause
+    // Phase 1 -> Phase 2: Miracle Brush glides in and sweeps across bottom (700ms)
     setTimeout(() => {
-      setIsFlipped(true);
-      if (soundEnabled) playMysticChime();
+      setRevealPhase("brush-enter");
+      if (soundEnabled) playShuffleSwoosh();
+
+      // Phase 2 -> Phase 3: Aurora expands, billows upward, completely covering the card (1200ms)
       setTimeout(() => {
-        setGameState("result");
-      }, 1000);
-    }, 800);
+        setRevealPhase("aurora-expand");
+        if (soundEnabled) playMysticChime();
+
+        // Phase 3 -> Phase 4: Aurora parts, revealing the drawn card front in full glory! (1500ms)
+        setTimeout(() => {
+          setRevealPhase("card-reveal");
+          if (soundEnabled) playMysticChime();
+
+          // Phase 4 -> Phase 5: Transition to detailed interpretation reading
+          setTimeout(() => {
+            setGameState("result");
+          }, 1800);
+        }, 1500);
+      }, 1200);
+    }, 700);
   };
 
   // Reset to draw again (Never blocks testing)
@@ -914,32 +930,171 @@ export default function CardDraw() {
       )}
 
       {/* ============================================================ */}
-      {/* STAGE 4: FLIPPING REVEAL ANIMATION                           */}
+      {/* STAGE 4: MIRACLE BRUSH & AURORA REVEAL ANIMATION             */}
       {/* ============================================================ */}
       {gameState === "flipping" && (
-        <div className="max-w-md w-full text-center space-y-6 flex flex-col items-center">
+        <div className="max-w-md w-full text-center space-y-6 flex flex-col items-center animate-fadeIn relative">
           
-          <div className="relative w-[240px] sm:w-[280px] aspect-[1/1.52] perspective-[1000px]">
-            <div 
-              className={`w-full h-full relative transition-transform duration-1000 ease-out transform-style-3d ${
-                isFlipped ? "rotate-y-180" : ""
-              }`}
-            >
-              {/* Back Face */}
-              <div className="absolute inset-0 backface-hidden rounded-2xl overflow-hidden border-2 border-amber-400 shadow-2xl">
-                <img src="/images/cards/card-back.png" alt="Card Back" className="w-full h-full object-cover" />
-              </div>
-
-              {/* Front Face (Flipped) */}
-              <div className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl overflow-hidden border-2 border-gold-end shadow-2xl shadow-gold-end/40">
-                <img src={activeCard.image} alt={activeCard.nameZh} className="w-full h-full object-cover" />
-              </div>
-            </div>
+          {/* Status Badge */}
+          <div className="space-y-1">
+            <span className="text-xs px-3.5 py-1 rounded-full bg-gold-end/20 text-gold-end font-bold border border-gold-end/40 tracking-widest uppercase transition-all duration-500 shadow-md">
+              {revealPhase === "card-back" && "✦ 心念共振・奇蹟顯化 ✦"}
+              {revealPhase === "brush-enter" && "✦ 奇蹟之筆・勾勒極光 ✦"}
+              {revealPhase === "aurora-expand" && "✦ 極光曼舞・覆蓋牌面 ✦"}
+              {revealPhase === "card-reveal" && `✦ 守護生靈【${activeCard.nameZh}】顯化 ✦`}
+            </span>
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-bold tracking-widest text-gradient-gold animate-pulse">
-            {isEn ? "The Oracle is Unfolding..." : isJa ? "神託が開かれます..." : "奇蹟正在顯化..."}
-          </h3>
+          {/* Central Card Container with Dynamic Aurora Layers */}
+          <div className="relative w-[260px] sm:w-[300px] aspect-[1/1.52] rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.9),0_0_35px_rgba(250,204,21,0.3)] group select-none">
+            
+            {/* 1. Base Layer: Card Back (Visible initially) */}
+            <div 
+              className={`absolute inset-0 rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-2xl transition-opacity duration-700 bg-[#0A1128] ${
+                revealPhase === "card-reveal" ? "opacity-0" : "opacity-100"
+              }`}
+            >
+              <img 
+                src="/images/cards/card-back.png" 
+                alt="Card Back" 
+                className="w-full h-full object-cover select-none" 
+              />
+            </div>
+
+            {/* 2. Top Layer: Customer's Drawn Card Front (Revealed at the end!) */}
+            <div 
+              className={`absolute inset-0 rounded-2xl overflow-hidden border-2 border-gold-end shadow-[0_0_35px_rgba(250,204,21,0.7)] transition-all duration-1000 ease-out bg-[#0A1128] ${
+                revealPhase === "card-reveal" 
+                  ? "opacity-100 scale-100 rotate-0" 
+                  : "opacity-0 scale-95"
+              }`}
+            >
+              <img 
+                src={activeCard.image} 
+                alt={activeCard.nameZh} 
+                className="w-full h-full object-cover select-none" 
+              />
+              {/* Golden holographic sheen on revealed card */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent pointer-events-none animate-pulse" />
+            </div>
+
+            {/* 3. The Aurora Curtain (Rises from bottom, expands and covers the entire card) */}
+            <div 
+              className={`absolute inset-x-0 bottom-0 rounded-2xl overflow-hidden pointer-events-none transition-all duration-1000 ease-out ${
+                revealPhase === "card-back" 
+                  ? "h-0 opacity-0"
+                  : revealPhase === "brush-enter"
+                  ? "h-[45%] opacity-90"
+                  : revealPhase === "aurora-expand"
+                  ? "h-[105%] opacity-100"
+                  : "h-[105%] opacity-0"
+              }`}
+            >
+              {/* Aurora Wave 1: Vivid Emerald & Cyan Aurora Stream */}
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/90 via-teal-400/80 to-cyan-400/85 mix-blend-screen blur-md animate-[pulse_2s_ease-in-out_infinite]" />
+              
+              {/* Aurora Wave 2: Cosmic Amethyst & Pink Aurora Ribbons */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/70 via-fuchsia-400/60 to-transparent mix-blend-screen blur-lg animate-[pulse_2.5s_ease-in-out_infinite_alternate]" />
+              
+              {/* Aurora Wave 3: Radiant Golden Starlight Mist */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-300/60 to-yellow-200/80 mix-blend-screen blur-sm" />
+
+              {/* Shimmering Sparkles Dancing through Aurora */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-full h-full relative">
+                  <Sparkles size={24} className="absolute bottom-8 left-1/4 text-white animate-ping" />
+                  <Sparkles size={28} className="absolute bottom-16 right-1/4 text-yellow-200 animate-pulse" />
+                  <Sparkles size={32} className="absolute top-1/3 left-1/2 -translate-x-1/2 text-cyan-200 animate-spin" style={{ animationDuration: "4s" }} />
+                </div>
+              </div>
+            </div>
+
+            {/* 4. The Miracle Brush ("奇蹟之筆" - Appears at bottom and paints aurora) */}
+            <div 
+              className={`absolute -bottom-10 left-1/2 -translate-x-1/2 pointer-events-none transition-all duration-800 ease-out z-40 ${
+                revealPhase === "brush-enter" 
+                  ? "opacity-100 translate-y-0 scale-100" 
+                  : revealPhase === "aurora-expand"
+                  ? "opacity-80 -translate-y-16 scale-110"
+                  : "opacity-0 translate-y-10 scale-75"
+              }`}
+            >
+              <svg width="180" height="120" viewBox="0 0 180 120" className="drop-shadow-[0_0_15px_rgba(250,204,21,0.85)]">
+                <defs>
+                  {/* Gold Handle Gradient */}
+                  <linearGradient id="brushHandle" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#78350f" />
+                    <stop offset="40%" stopColor="#d97706" />
+                    <stop offset="70%" stopColor="#fde047" />
+                    <stop offset="100%" stopColor="#ffffff" />
+                  </linearGradient>
+                  {/* Aurora Bristle Tip Gradient */}
+                  <linearGradient id="brushBristles" x1="0%" y1="100%" x2="50%" y2="0%">
+                    <stop offset="0%" stopColor="#d97706" />
+                    <stop offset="40%" stopColor="#10b981" />
+                    <stop offset="75%" stopColor="#06b6d4" />
+                    <stop offset="100%" stopColor="#ffffff" />
+                  </linearGradient>
+                </defs>
+
+                {/* Sweeping Aurora Arc painted by the brush tip */}
+                <path
+                  d="M 20 85 Q 90 40 160 85"
+                  fill="none"
+                  stroke="url(#brushBristles)"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                  className="animate-pulse"
+                />
+
+                {/* Brush Handle (Slender Calligraphy/Oil Brush at 40 deg angle) */}
+                <path
+                  d="M 90 60 L 145 10 C 148 7, 153 7, 155 10 L 157 12 C 159 14, 159 19, 156 22 L 102 72 Z"
+                  fill="url(#brushHandle)"
+                  stroke="#fde047"
+                  strokeWidth="1.2"
+                />
+
+                {/* Silver Ferrule */}
+                <rect x="86" y="58" width="16" height="14" rx="2" transform="rotate(-40 94 65)" fill="#e2e8f0" stroke="#f8fafc" strokeWidth="1" />
+
+                {/* Glowing Aurora Bristles */}
+                <path
+                  d="M 85 70 C 80 75, 68 85, 65 92 C 72 90, 84 82, 94 77 Z"
+                  fill="url(#brushBristles)"
+                  filter="drop-shadow(0 0 8px #10b981)"
+                />
+
+                {/* Concentric Starlight Sparkle at the brush contact point */}
+                <circle cx="65" cy="92" r="6" fill="#ffffff" className="animate-ping" />
+                <circle cx="65" cy="92" r="3" fill="#fde047" />
+              </svg>
+            </div>
+
+            {/* Starburst rays when card front crystallizes */}
+            {revealPhase === "card-reveal" && (
+              <div className="absolute -inset-8 flex items-center justify-center pointer-events-none animate-fadeIn">
+                <div className="w-full h-full rounded-3xl border-2 border-gold-end animate-ping opacity-70" />
+              </div>
+            )}
+
+          </div>
+
+          {/* Dynamic Poetic Progress Text */}
+          <div className="space-y-1">
+            <h3 className="text-xl sm:text-2xl font-bold tracking-widest text-gradient-gold font-serif animate-pulse">
+              {revealPhase === "card-back" && "奇蹟正在顯化..."}
+              {revealPhase === "brush-enter" && "奇蹟之筆・勾勒極光流彩..."}
+              {revealPhase === "aurora-expand" && "極光湧現・喚醒守護生靈..."}
+              {revealPhase === "card-reveal" && `【${activeCard.nameZh}】・為你而來`}
+            </h3>
+            <p className="text-xs text-gray-300 tracking-wider">
+              {revealPhase === "card-reveal" 
+                ? activeCard.keywordZh
+                : "深呼吸，感受極光頻率與心靈的共振"}
+            </p>
+          </div>
+
         </div>
       )}
 

@@ -252,7 +252,8 @@ export default function ShopDetail() {
               {t("shopdetail.buy_now")}
             </button>
 
-            {/* 線上免費抽牌體驗按鈕 */}
+            {/* 線上免費抽牌體驗按鈕（尚未正式上架，測試完成後再行開啟） */}
+            {/*
             <Link
               to="/draw"
               className="w-full py-3.5 mt-1 rounded-xl border border-amber-300/50 bg-gradient-to-r from-amber-500/15 via-yellow-400/20 to-amber-500/15 hover:from-amber-500/30 hover:to-amber-500/30 text-amber-200 hover:text-white font-bold tracking-[2px] transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-amber-500/10 group cursor-pointer"
@@ -263,6 +264,7 @@ export default function ShopDetail() {
                 FREE
               </span>
             </Link>
+            */}
           </div>
         </div>
       </div>
