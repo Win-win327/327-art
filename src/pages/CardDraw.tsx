@@ -12,7 +12,9 @@ import {
   ChevronUp, 
   Compass, 
   Heart,
-  AlertCircle
+  AlertCircle,
+  Layers,
+  ArrowRight
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { useCart } from "../context/CartContext";
@@ -50,6 +52,59 @@ function playMysticChime() {
   }
 }
 
+// Web Audio API Synthesizer for realistic card shuffle swoosh / friction
+function playShuffleSwoosh() {
+  try {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+
+    // 1. Noise buffer for card friction paper swoosh
+    const bufferSize = Math.floor(ctx.sampleRate * 0.22);
+    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = ctx.createBufferSource();
+    noise.buffer = buffer;
+
+    const filter = ctx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.setValueAtTime(1500, now);
+    filter.frequency.exponentialRampToValueAtTime(650, now + 0.2);
+    filter.Q.setValueAtTime(2.8, now);
+
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0, now);
+    gain.gain.linearRampToValueAtTime(0.25, now + 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+    noise.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    noise.start(now);
+    noise.stop(now + 0.22);
+
+    // 2. Subtle harmonic undertone (B5 chime)
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(987.77, now);
+    oscGain.gain.setValueAtTime(0.04, now);
+    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+    osc.connect(oscGain);
+    oscGain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.3);
+  } catch (e) {
+    // Audio context may be restricted by autoplay policy
+  }
+}
+
 const MAX_FREE_DRAWS = 3;
 
 export default function CardDraw() {
@@ -69,6 +124,10 @@ export default function CardDraw() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHandHovered, setIsHandHovered] = useState(false);
   const [showQuotaModal, setShowQuotaModal] = useState(false);
+
+  // Hindu Shuffle Mini-Game State
+  const [shuffleCount, setShuffleCount] = useState<number>(0);
+  const [isShufflingAnim, setIsShufflingAnim] = useState<boolean>(false);
 
   // Daily Free Quota Management
   const [remainingFreeDraws, setRemainingFreeDraws] = useState<number>(MAX_FREE_DRAWS);
@@ -114,17 +173,35 @@ export default function CardDraw() {
   // Deck spread cards count
   const SPREAD_COUNT = 15;
 
-  // Start the shuffle animation
+  // Start the Hindu shuffle mini-game
   const handleStartShuffle = () => {
     if (remainingFreeDraws <= 0) {
       setShowQuotaModal(true);
       return;
     }
     if (soundEnabled) playMysticChime();
+    setShuffleCount(0);
+    setIsShufflingAnim(false);
     setGameState("shuffling");
+  };
+
+  // Perform one Hindu shuffle slice
+  const handlePerformShuffle = () => {
+    if (isShufflingAnim) return;
+    setIsShufflingAnim(true);
+    if (soundEnabled) {
+      playShuffleSwoosh();
+    }
+    setShuffleCount((prev) => prev + 1);
     setTimeout(() => {
-      setGameState("spread");
-    }, 1500);
+      setIsShufflingAnim(false);
+    }, 450);
+  };
+
+  // Finish shuffle and unfold the spread
+  const handleFinishShuffle = () => {
+    if (soundEnabled) playMysticChime();
+    setGameState("spread");
   };
 
   // User selects a card from the fan spread
@@ -159,6 +236,7 @@ export default function CardDraw() {
     }
     setIsFlipped(false);
     setSelectedCards([]);
+    setShuffleCount(0);
     setGameState("intro");
   };
 
@@ -301,7 +379,6 @@ export default function CardDraw() {
 
                   {/* LEFT HAND: Gently cupping the left edge of the card */}
                   <g className="transition-all duration-300">
-                    {/* Hand Silhouette: Wrist at bottom-left, thumb & fingers resting on outer gold border */}
                     <path
                       d="M -6 480 
                          C 8 430, 18 385, 22 340 
@@ -322,8 +399,6 @@ export default function CardDraw() {
                       filter="url(#cradleGlow)"
                       className="backdrop-blur-[1px]"
                     />
-
-                    {/* Subtle energy nodes on left fingertips */}
                     <circle cx="44" cy="230" r="3" fill="#fef08a" className="animate-pulse" />
                     <circle cx="68" cy="244" r="3" fill="#67e8f9" className="animate-pulse" />
                     <circle cx="42" cy="285" r="2.5" fill="#ffffff" className="animate-ping" style={{ animationDuration: "2.8s" }} />
@@ -331,7 +406,6 @@ export default function CardDraw() {
 
                   {/* RIGHT HAND: Gently cupping the right edge of the card */}
                   <g className="transition-all duration-300">
-                    {/* Hand Silhouette: Wrist at bottom-right, thumb & fingers resting on outer gold border */}
                     <path
                       d="M 326 480 
                          C 312 430, 302 385, 298 340 
@@ -352,8 +426,6 @@ export default function CardDraw() {
                       filter="url(#cradleGlow)"
                       className="backdrop-blur-[1px]"
                     />
-
-                    {/* Subtle energy nodes on right fingertips */}
                     <circle cx="276" cy="230" r="3" fill="#fef08a" className="animate-pulse" />
                     <circle cx="252" cy="244" r="3" fill="#67e8f9" className="animate-pulse" />
                     <circle cx="278" cy="285" r="2.5" fill="#ffffff" className="animate-ping" style={{ animationDuration: "2.8s" }} />
@@ -376,7 +448,6 @@ export default function CardDraw() {
                     strokeDasharray="6 6"
                     className="opacity-60"
                   />
-                  {/* Floating starlight particles at bottom center */}
                   <circle cx="160" cy="455" r="3" fill="#ffffff" className="animate-ping" style={{ animationDuration: "2.2s" }} />
                 </svg>
               </div>
@@ -539,38 +610,237 @@ export default function CardDraw() {
       )}
 
       {/* ============================================================ */}
-      {/* STAGE 2: SHUFFLING CINEMATIC ANIMATION                        */}
+      {/* STAGE 2: HINDU SHUFFLE MINI-GAME (FIRST-PERSON PERSPECTIVE)   */}
       {/* ============================================================ */}
       {gameState === "shuffling" && (
-        <div className="max-w-md w-full text-center space-y-8 animate-fadeIn">
-          <div className="relative w-48 h-72 mx-auto">
-            {/* Shuffling overlapping deck layers with the real card back */}
-            {[0, 1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="absolute inset-0 rounded-2xl border-2 border-gold-end/40 shadow-2xl overflow-hidden transition-all duration-700"
-                style={{
-                  transform: `translateY(${i * -4}px) rotate(${(i - 2) * 5}deg) scale(${1 - i * 0.02})`,
-                  animation: `pulse 1.2s ease-in-out infinite alternate ${i * 0.15}s`
-                }}
-              >
+        <div className="max-w-2xl w-full text-center space-y-6 animate-fadeIn">
+          
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gold-end/15 border border-gold-end/40 text-gold-end text-xs font-semibold tracking-widest shadow-md">
+              <Layers size={13} />
+              <span>第一人稱視角・印度洗牌調頻</span>
+            </div>
+            
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-widest text-gradient-gold font-serif">
+              輕觸洗牌・注入心念
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-300 max-w-lg mx-auto">
+              按一下就洗一次牌。每一次切換牌疊，都在調和你的心念頻率（建議洗牌 3～5 次）。
+            </p>
+          </div>
+
+          {/* Shuffle Energy Status Bar */}
+          <div className="max-w-xs mx-auto flex flex-col items-center gap-1.5">
+            <div className="flex items-center justify-between w-full text-xs font-semibold">
+              <span className="text-gold-end">已洗牌次數：{shuffleCount} 次</span>
+              <span className={shuffleCount >= 3 ? "text-emerald-300 font-bold" : "text-gray-400"}>
+                {shuffleCount >= 3 ? "★ 能量調和完成" : "調頻中..."}
+              </span>
+            </div>
+
+            {/* Progress Bars (1, 2, 3+) */}
+            <div className="flex items-center gap-2 w-full h-2">
+              {[1, 2, 3].map((step) => (
+                <div
+                  key={step}
+                  className={`flex-1 h-full rounded-full transition-all duration-500 ${
+                    shuffleCount >= step 
+                      ? "bg-gradient-to-r from-amber-400 to-yellow-300 shadow-[0_0_8px_rgba(250,204,21,0.7)]" 
+                      : "bg-white/10"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* ============================================================ */}
+          {/* FIRST-PERSON HINDU SHUFFLE INTERACTIVE STAGE                 */}
+          {/* ============================================================ */}
+          <div 
+            onClick={handlePerformShuffle}
+            className="relative w-[340px] sm:w-[420px] h-[340px] sm:h-[380px] mx-auto my-2 select-none cursor-pointer group"
+            title="輕觸牌面或按鈕進行洗牌"
+          >
+            {/* Ambient Cosmic Ring & Halo on Altar */}
+            <div className="absolute inset-0 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-md shadow-2xl transition-all duration-300 group-hover:border-gold-end/40" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gold-end/10 blur-3xl pointer-events-none" />
+
+            {/* ---------------------------------------------------------- */}
+            {/* 1. LEFT HAND & BASE STACK (RECEIVING DECK)                 */}
+            {/* ---------------------------------------------------------- */}
+            <div className="absolute left-6 sm:left-10 bottom-6 sm:bottom-8 w-[140px] sm:w-[160px] aspect-[1/1.52] transition-transform duration-300">
+              {/* Stack depth under left deck */}
+              <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-xl border border-amber-300/40 bg-[#070b1a] shadow-xl" />
+              <div className="absolute inset-0 translate-x-3 translate-y-3 rounded-xl border border-amber-300/30 bg-[#050814] shadow-2xl" />
+
+              {/* Top card of the left stack */}
+              <div className="relative w-full h-full rounded-xl overflow-hidden border-2 border-amber-300/70 shadow-2xl -rotate-6">
                 <img 
                   src="/images/cards/card-back.png" 
-                  alt="327 ART Card Back" 
+                  alt="Left Stack Card" 
                   className="w-full h-full object-cover" 
                 />
               </div>
-            ))}
+
+              {/* Translucent Left Hand holding the base stack from below */}
+              <div className="absolute -inset-6 pointer-events-none z-20">
+                <svg viewBox="0 0 200 240" className="w-full h-full drop-shadow-[0_0_12px_rgba(250,204,21,0.5)]">
+                  <defs>
+                    <linearGradient id="hinduLeftHand" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
+                      <stop offset="50%" stopColor="#818cf8" stopOpacity="0.4" />
+                      <stop offset="85%" stopColor="#fde047" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="#ffffff" stopOpacity="0.8" />
+                    </linearGradient>
+                  </defs>
+                  {/* Left palm cupping bottom of stack */}
+                  <path
+                    d="M 10 240 C 20 190, 30 160, 45 140 C 55 125, 75 125, 85 138 C 95 150, 85 170, 75 190 C 65 210, 50 240, 40 240 Z"
+                    fill="url(#hinduLeftHand)"
+                    stroke="#67e8f9"
+                    strokeWidth="1.8"
+                    className="opacity-80"
+                  />
+                  {/* Left thumb resting on left edge */}
+                  <path
+                    d="M 35 150 C 42 120, 55 105, 68 110 C 78 115, 72 135, 60 155 Z"
+                    fill="url(#hinduLeftHand)"
+                    stroke="#fde047"
+                    strokeWidth="1.8"
+                    className="opacity-85"
+                  />
+                  <circle cx="68" cy="112" r="3" fill="#ffffff" className="animate-pulse" />
+                </svg>
+              </div>
+            </div>
+
+            {/* ---------------------------------------------------------- */}
+            {/* 2. RIGHT HAND & SOURCE DECK (GRIPPING PACKET FROM ABOVE)   */}
+            {/* ---------------------------------------------------------- */}
+            <div className="absolute right-6 sm:right-10 top-6 sm:top-8 w-[140px] sm:w-[160px] aspect-[1/1.52] transition-transform duration-300">
+              {/* Stack depth under right deck */}
+              <div className="absolute inset-0 -translate-x-1.5 -translate-y-1.5 rounded-xl border border-amber-300/40 bg-[#070b1a] shadow-xl" />
+              <div className="absolute inset-0 -translate-x-3 -translate-y-3 rounded-xl border border-amber-300/30 bg-[#050814] shadow-2xl" />
+
+              {/* Main deck held in right hand */}
+              <div className="relative w-full h-full rounded-xl overflow-hidden border-2 border-amber-300/70 shadow-2xl rotate-3">
+                <img 
+                  src="/images/cards/card-back.png" 
+                  alt="Right Stack Card" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+
+              {/* Translucent Right Hand gripping from above */}
+              <div className="absolute -inset-6 pointer-events-none z-20">
+                <svg viewBox="0 0 200 240" className="w-full h-full drop-shadow-[0_0_12px_rgba(250,204,21,0.5)]">
+                  <defs>
+                    <linearGradient id="hinduRightHand" x1="100%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
+                      <stop offset="50%" stopColor="#818cf8" stopOpacity="0.4" />
+                      <stop offset="85%" stopColor="#fde047" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="#ffffff" stopOpacity="0.8" />
+                    </linearGradient>
+                  </defs>
+                  {/* Right fingers holding top edge */}
+                  <path
+                    d="M 190 0 C 175 40, 160 70, 145 90 C 135 105, 115 105, 105 92 C 95 80, 105 60, 115 40 C 125 20, 140 0, 150 0 Z"
+                    fill="url(#hinduRightHand)"
+                    stroke="#67e8f9"
+                    strokeWidth="1.8"
+                    className="opacity-80"
+                  />
+                  {/* Right thumb gripping bottom edge */}
+                  <path
+                    d="M 160 110 C 150 140, 138 155, 125 150 C 115 145, 120 125, 135 105 Z"
+                    fill="url(#hinduRightHand)"
+                    stroke="#fde047"
+                    strokeWidth="1.8"
+                    className="opacity-85"
+                  />
+                  <circle cx="125" cy="148" r="3" fill="#ffffff" className="animate-pulse" />
+                </svg>
+              </div>
+            </div>
+
+            {/* ---------------------------------------------------------- */}
+            {/* 3. DYNAMIC SLIDING PACKET (HINDU SHUFFLE SLICE MOTION)     */}
+            {/* ---------------------------------------------------------- */}
+            <div 
+              className={`absolute w-[136px] sm:w-[156px] aspect-[1/1.52] z-30 pointer-events-none transition-all duration-400 ease-out ${
+                isShufflingAnim
+                  ? "left-8 bottom-8 -rotate-6 scale-100 opacity-95 shadow-[0_0_25px_rgba(250,204,21,0.8)]"
+                  : "right-8 top-8 rotate-3 scale-95 opacity-0"
+              }`}
+            >
+              <div className="w-full h-full rounded-xl overflow-hidden border-2 border-gold-end shadow-2xl">
+                <img 
+                  src="/images/cards/card-back.png" 
+                  alt="Sliding Card Packet" 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+
+              {/* Sparkle energy trails when sliding */}
+              {isShufflingAnim && (
+                <div className="absolute -inset-4 flex items-center justify-center pointer-events-none">
+                  <div className="w-full h-full rounded-2xl border-2 border-gold-end animate-ping opacity-60" />
+                </div>
+              )}
+            </div>
+
+            {/* Tap cue tag overlay */}
+            <div className="absolute bottom-3 inset-x-8 py-1 px-3 rounded-lg bg-black/60 backdrop-blur-md border border-white/20 text-[11px] text-amber-200 tracking-wider text-center pointer-events-none group-hover:border-gold-end/50">
+              ✦ 輕觸畫面即可切牌洗牌 ✦
+            </div>
+
           </div>
 
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold tracking-widest text-gradient-gold">
-              {isEn ? "Harmonizing Cosmic Frequencies..." : isJa ? "波動を調律しています..." : "能量調頻洗牌中..."}
-            </h3>
-            <p className="text-sm text-gray-300 tracking-wider">
-              {isEn ? "Hold your breath and focus your intention." : "請保持平穩呼吸，心中專注於此刻的提問。"}
-            </p>
+          {/* ============================================================ */}
+          {/* CONTROLS: SHUFFLE BUTTON & FINISH / PROCEED BUTTON           */}
+          {/* ============================================================ */}
+          <div className="flex flex-col items-center gap-3 pt-2">
+            
+            {/* Primary Action: Tap to Shuffle Once */}
+            <button
+              type="button"
+              onClick={handlePerformShuffle}
+              disabled={isShufflingAnim}
+              className="px-8 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-gold-end/50 hover:border-gold-end text-gold-end hover:text-white font-bold text-sm sm:text-base tracking-widest transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2.5"
+            >
+              <Layers size={18} className={isShufflingAnim ? "animate-bounce" : ""} />
+              <span>{isShufflingAnim ? "切牌調頻中..." : "輕觸洗一次牌 (Tap to Shuffle)"}</span>
+            </button>
+
+            {/* Secondary Action: Proceed to Fan Spread */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={handleFinishShuffle}
+                className={`px-10 py-4 rounded-full font-bold tracking-[3px] text-base sm:text-lg transition-all shadow-2xl flex items-center justify-center gap-3 cursor-pointer ${
+                  shuffleCount >= 1
+                    ? "bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black hover:scale-105 active:scale-95 shadow-gold-end/30"
+                    : "bg-white/10 text-gray-300 border border-white/20 hover:bg-white/15"
+                }`}
+              >
+                <Sparkles size={18} className="animate-spin text-inherit" style={{ animationDuration: "6s" }} />
+                <span>
+                  {shuffleCount >= 3 
+                    ? "✦ 能量已調和・攤開牌陣 ✦" 
+                    : shuffleCount > 0 
+                    ? "完成洗牌・展開牌陣" 
+                    : "直接展開牌陣"}
+                </span>
+                <ArrowRight size={18} />
+              </button>
+            </div>
+
+            <div className="text-xs text-gray-400 tracking-widest pt-1">
+              ✦ 感受心念沉澱後，隨時點擊「展開牌陣」進行直覺選牌 ✦
+            </div>
+
           </div>
+
         </div>
       )}
 
