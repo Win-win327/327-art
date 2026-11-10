@@ -1248,34 +1248,70 @@ export default function CardDraw() {
                   </>
                 )}
 
-                {/* When in "aurora-smoke" phase: Card with Luminous Glowing Aurora Smoke Mist */}
+                {/* When in "aurora-smoke" phase: Card with Expansive Spellcasting Aurora Smoke Mist Billowing Beyond the Card */}
                 {revealPhase === "aurora-smoke" && (
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,0.9),0_0_40px_rgba(56,189,248,0.5)] border-2 border-cyan-300/80 bg-[#0A1128]">
-                    {/* Underlying card */}
-                    <img 
-                      src={activeCard.image} 
-                      alt={activeCard.nameZh} 
-                      className="w-full h-full object-cover select-none opacity-80" 
-                    />
-
-                    {/* Luminous Aurora Smoke Mist ("有一個亮光煙霧在牌卡上") */}
-                    <div className="absolute -inset-4 pointer-events-none">
-                      {/* Mist Layer 1: Emerald & Cyan Glowing Vapor */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-emerald-400/80 via-teal-300/70 to-cyan-400/80 blur-xl mix-blend-screen animate-aurora-mist" />
+                  <div className="relative w-full h-full">
+                    
+                    {/* ---------------------------------------------------- */}
+                    {/* EXPANSIVE SPELLCASTING AURORA SMOKE (BEYOND CARD!)   */}
+                    {/* ---------------------------------------------------- */}
+                    <div className="absolute -inset-16 sm:-inset-28 pointer-events-none z-40 overflow-visible">
                       
-                      {/* Mist Layer 2: Violet & Celestial Gold Luminous Swirls */}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/60 via-fuchsia-400/50 to-amber-300/60 blur-lg mix-blend-screen animate-pulse" />
+                      {/* Expansive Cloud Layer 1: Huge Emerald & Teal Atmospheric Aurora Fog */}
+                      <div className="absolute -inset-6 rounded-full bg-gradient-to-t from-emerald-400/80 via-teal-300/65 to-cyan-400/80 blur-3xl mix-blend-screen animate-aurora-billow opacity-90" />
                       
-                      {/* Mist Layer 3: Central Bright Starlight Core */}
-                      <div className="absolute inset-6 bg-gradient-to-b from-transparent via-white/70 to-transparent blur-md mix-blend-overlay" />
+                      {/* Expansive Cloud Layer 2: Mystic Violet & Magenta Nebula Swirls spreading outwards */}
+                      <div className="absolute -inset-10 rounded-full bg-gradient-to-tr from-purple-600/60 via-fuchsia-400/45 to-amber-300/60 blur-3xl mix-blend-screen animate-pulse" />
+                      
+                      {/* Expansive Cloud Layer 3: Dynamic Cyan Smoke Wave rolling outward */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/70 via-sky-300/80 to-emerald-400/70 blur-2xl mix-blend-screen animate-aurora-mist" />
 
-                      {/* Floating dancing stardust glints within the smoke */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Sparkles size={28} className="text-white animate-ping" />
-                        <Sparkles size={32} className="absolute top-1/4 right-1/4 text-cyan-200 animate-spin" style={{ animationDuration: "3s" }} />
-                        <Sparkles size={24} className="absolute bottom-1/4 left-1/4 text-yellow-200 animate-pulse" />
+                      {/* Spellcasting Smoke Tendrils & Floating Clouds Rising Beyond the Card */}
+                      <div className="absolute inset-0 animate-smoke-rise">
+                        {/* Wispy smoke tendril 1: Top-Left billowing out */}
+                        <div className="absolute -top-12 -left-8 w-44 h-44 rounded-full bg-cyan-300/50 blur-2xl animate-pulse" />
+                        {/* Wispy smoke tendril 2: Top-Right billowing out */}
+                        <div className="absolute -top-16 -right-10 w-48 h-48 rounded-full bg-emerald-300/50 blur-2xl animate-pulse" style={{ animationDelay: "0.5s" }} />
+                        {/* Wispy smoke tendril 3: Bottom-Left sweeping up */}
+                        <div className="absolute -bottom-10 -left-12 w-48 h-48 rounded-full bg-fuchsia-400/40 blur-2xl" />
+                        {/* Wispy smoke tendril 4: Bottom-Right sweeping up */}
+                        <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-full bg-amber-300/45 blur-2xl" />
                       </div>
+
+                      {/* Surrounding Spellcasting Particle Stars Drifting Beyond Card Edges */}
+                      <div className="absolute inset-0">
+                        {/* Far Top Spores */}
+                        <Sparkles size={28} className="absolute -top-8 left-1/4 text-cyan-200 animate-ping" style={{ animationDuration: "2.4s" }} />
+                        <Sparkles size={32} className="absolute -top-10 right-1/4 text-emerald-200 animate-pulse" style={{ animationDuration: "1.8s" }} />
+                        {/* Far Left Spores */}
+                        <Sparkles size={26} className="absolute top-1/3 -left-10 text-yellow-200 animate-pulse" style={{ animationDuration: "2s" }} />
+                        <Sparkles size={30} className="absolute bottom-1/4 -left-8 text-cyan-300 animate-ping" style={{ animationDuration: "2.6s" }} />
+                        {/* Far Right Spores */}
+                        <Sparkles size={34} className="absolute top-1/4 -right-10 text-amber-200 animate-spin" style={{ animationDuration: "4s" }} />
+                        <Sparkles size={26} className="absolute bottom-1/3 -right-8 text-emerald-300 animate-pulse" style={{ animationDuration: "2.2s" }} />
+                        {/* Far Bottom Spores */}
+                        <Sparkles size={28} className="absolute -bottom-8 left-1/3 text-white animate-pulse" style={{ animationDuration: "1.9s" }} />
+                        <Sparkles size={30} className="absolute -bottom-10 right-1/3 text-cyan-200 animate-ping" style={{ animationDuration: "2.5s" }} />
+                        
+                        {/* Center core stars */}
+                        <Sparkles size={36} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-spin" style={{ animationDuration: "3s" }} />
+                      </div>
+
+                      {/* Concentric Magical Aurora Energy Wave Ring */}
+                      <div className="absolute -inset-6 rounded-3xl border border-cyan-300/40 animate-ping pointer-events-none" style={{ animationDuration: "2.5s" }} />
                     </div>
+
+                    {/* Underlying Centered Card */}
+                    <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_50px_rgba(56,189,248,0.7)] border-2 border-cyan-300 bg-[#0A1128] z-20">
+                      <img 
+                        src={activeCard.image} 
+                        alt={activeCard.nameZh} 
+                        className="w-full h-full object-cover select-none opacity-85" 
+                      />
+                      {/* Luminous veil directly across card face */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/30 via-cyan-400/30 to-amber-300/20 mix-blend-screen pointer-events-none animate-pulse" />
+                    </div>
+
                   </div>
                 )}
 
