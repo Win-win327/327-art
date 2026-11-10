@@ -52,6 +52,81 @@ function playMysticChime() {
   }
 }
 
+// Web Audio API Synthesizer for deep sacred summoning drone / singing bowl
+function playSummonHum() {
+  try {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+
+    // Deep singing bowl harmonic chord (F3, C4, G4)
+    const freqs = [174.61, 261.63, 392.0];
+    freqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.09 / (idx + 1), now + 0.25);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 2.2);
+    });
+  } catch (e) {
+    // Audio context may be restricted by autoplay policy
+  }
+}
+
+// Web Audio API Synthesizer for legendary card flip & sparkle burst (PTCG Pocket style)
+function playCardFlipReveal() {
+  try {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const now = ctx.currentTime;
+
+    // Sparkling celestial bell cascade: E5, G#5, B5, E6, G#6, B6
+    const freqs = [659.25, 830.61, 987.77, 1318.51, 1661.22, 1975.53];
+    freqs.forEach((f, idx) => {
+      const delay = idx * 0.055;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(f, now + delay);
+
+      gain.gain.setValueAtTime(0, now + delay);
+      gain.gain.linearRampToValueAtTime(0.12, now + delay + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 1.6);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + delay);
+      osc.stop(now + delay + 1.8);
+    });
+
+    // Deep warm golden sub-bass swell
+    const sub = ctx.createOscillator();
+    const subGain = ctx.createGain();
+    sub.type = "sine";
+    sub.frequency.setValueAtTime(130.81, now);
+    sub.frequency.exponentialRampToValueAtTime(65.41, now + 1.6);
+    subGain.gain.setValueAtTime(0.14, now);
+    subGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+    sub.connect(subGain);
+    subGain.connect(ctx.destination);
+    sub.start(now);
+    sub.stop(now + 1.8);
+  } catch (e) {
+    // Audio context may be restricted by autoplay policy
+  }
+}
+
 // Web Audio API Synthesizer for realistic card shuffle swoosh / friction
 function playShuffleSwoosh() {
   try {
@@ -121,8 +196,12 @@ export default function CardDraw() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [showManualModal, setShowManualModal] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [revealPhase, setRevealPhase] = useState<"card-back" | "brush-enter" | "aurora-expand" | "card-reveal">("card-back");
+  
+  // Reveal Ceremony Phases: "summon" (magic circle) | "flip" (3D card turn & light burst) | "crystallize" (holo shimmer)
+  const [revealPhase, setRevealPhase] = useState<"summon" | "flip" | "crystallize">("summon");
+  // Interactive 3D Card Tilt (inspired by PTCG Pocket)
+  const [cardTilt, setCardTilt] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
   const [isHandHovered, setIsHandHovered] = useState(false);
   const [showQuotaModal, setShowQuotaModal] = useState(false);
 
@@ -212,10 +291,20 @@ export default function CardDraw() {
     setGameState("spread");
   };
 
+  // Interactive 3D Card Tilt handler for inspecting the revealed card (inspired by PTCG Pocket)
+  const handleMouseMoveCard = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to +0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to +0.5
+    setCardTilt({ x: x * 16, y: -y * 16 });
+  };
+
+  const handleMouseLeaveCard = () => {
+    setCardTilt({ x: 0, y: 0 });
+  };
+
   // User selects a card from the fan spread
   const handleSelectCard = (index: number) => {
-    if (soundEnabled) playMysticChime();
-
     // Deduct one draw from daily quota (can reach 0 without locking test)
     deductDrawCount();
 
@@ -225,38 +314,30 @@ export default function CardDraw() {
 
     setSelectedCards([picked]);
     setGameState("flipping");
-    setRevealPhase("card-back");
+    setRevealPhase("summon");
+    setCardTilt({ x: 0, y: 0 });
 
-    // Phase 1 -> Phase 2: Miracle Brush glides in and sweeps across bottom (700ms)
+    // Phase 1: Deep cosmic summoning drone & sacred magic circle activation
+    if (soundEnabled) playSummonHum();
+
+    // Phase 1 -> Phase 2: 3D Perspective Flip, God Rays & Shockwave Burst (1300ms)
     setTimeout(() => {
-      setRevealPhase("brush-enter");
-      if (soundEnabled) playShuffleSwoosh();
+      setRevealPhase("flip");
+      if (soundEnabled) playCardFlipReveal();
 
-      // Phase 2 -> Phase 3: Aurora expands, billows upward, completely covering the card (1200ms)
+      // Phase 2 -> Phase 3: Holographic Foil Sheen & Animal Guardian Crystallization (1400ms)
       setTimeout(() => {
-        setRevealPhase("aurora-expand");
-        if (soundEnabled) playMysticChime();
-
-        // Phase 3 -> Phase 4: Aurora parts, revealing the drawn card front in full glory! (1500ms)
-        setTimeout(() => {
-          setRevealPhase("card-reveal");
-          if (soundEnabled) playMysticChime();
-
-          // Phase 4 -> Phase 5: Transition to detailed interpretation reading
-          setTimeout(() => {
-            setGameState("result");
-          }, 1800);
-        }, 1500);
-      }, 1200);
-    }, 700);
+        setRevealPhase("crystallize");
+      }, 1400);
+    }, 1300);
   };
 
   // Reset to draw again (Never blocks testing)
   const handleResetDraw = () => {
-    setIsFlipped(false);
     setSelectedCards([]);
     setShuffleCount(0);
     setShufflePhase("split");
+    setCardTilt({ x: 0, y: 0 });
     setGameState("intro");
   };
 
@@ -930,170 +1011,285 @@ export default function CardDraw() {
       )}
 
       {/* ============================================================ */}
-      {/* STAGE 4: MIRACLE BRUSH & AURORA REVEAL ANIMATION             */}
+      {/* STAGE 4: DREAMY 3D SUMMON & REVEAL CEREMONY                   */}
+      {/* (Inspired by Manaera Sacred Circle & PTCG Pocket 3D Foil)    */}
       {/* ============================================================ */}
       {gameState === "flipping" && (
-        <div className="max-w-md w-full text-center space-y-6 flex flex-col items-center animate-fadeIn relative">
+        <div className="max-w-xl w-full text-center space-y-6 flex flex-col items-center animate-fadeIn relative z-20 py-4">
           
           {/* Status Badge */}
           <div className="space-y-1">
-            <span className="text-xs px-3.5 py-1 rounded-full bg-gold-end/20 text-gold-end font-bold border border-gold-end/40 tracking-widest uppercase transition-all duration-500 shadow-md">
-              {revealPhase === "card-back" && "✦ 心念共振・奇蹟顯化 ✦"}
-              {revealPhase === "brush-enter" && "✦ 奇蹟之筆・勾勒極光 ✦"}
-              {revealPhase === "aurora-expand" && "✦ 極光曼舞・覆蓋牌面 ✦"}
-              {revealPhase === "card-reveal" && `✦ 守護生靈【${activeCard.nameZh}】顯化 ✦`}
+            <span className="inline-flex items-center gap-2 text-xs px-4 py-1.5 rounded-full bg-gold-end/20 text-gold-end font-bold border border-gold-end/50 tracking-widest uppercase transition-all duration-500 shadow-[0_0_15px_rgba(250,204,21,0.3)]">
+              <Sparkles size={14} className="animate-spin text-gold-end" style={{ animationDuration: "5s" }} />
+              {revealPhase === "summon" && "✦ 神聖召喚・共振蓄能 ✦"}
+              {revealPhase === "flip" && "✦ 3D 翻轉・神光迸發 ✦"}
+              {revealPhase === "crystallize" && `✦ 守護生靈【${activeCard.nameZh}】顯化 ✦`}
             </span>
           </div>
 
-          {/* Central Card Container with Dynamic Aurora Layers */}
-          <div className="relative w-[260px] sm:w-[300px] aspect-[1/1.52] rounded-2xl shadow-[0_15px_45px_rgba(0,0,0,0.9),0_0_35px_rgba(250,204,21,0.3)] group select-none">
+          {/* Central 3D Interactive Stage */}
+          <div 
+            className="relative w-[320px] sm:w-[380px] h-[460px] sm:h-[500px] flex items-center justify-center select-none"
+            onMouseMove={revealPhase === "crystallize" ? handleMouseMoveCard : undefined}
+            onMouseLeave={revealPhase === "crystallize" ? handleMouseLeaveCard : undefined}
+          >
             
-            {/* 1. Base Layer: Card Back (Visible initially) */}
-            <div 
-              className={`absolute inset-0 rounded-2xl overflow-hidden border-2 border-amber-300/80 shadow-2xl transition-opacity duration-700 bg-[#0A1128] ${
-                revealPhase === "card-reveal" ? "opacity-0" : "opacity-100"
-              }`}
-            >
-              <img 
-                src="/images/cards/card-back.png" 
-                alt="Card Back" 
-                className="w-full h-full object-cover select-none" 
-              />
-            </div>
-
-            {/* 2. Top Layer: Customer's Drawn Card Front (Revealed at the end!) */}
-            <div 
-              className={`absolute inset-0 rounded-2xl overflow-hidden border-2 border-gold-end shadow-[0_0_35px_rgba(250,204,21,0.7)] transition-all duration-1000 ease-out bg-[#0A1128] ${
-                revealPhase === "card-reveal" 
-                  ? "opacity-100 scale-100 rotate-0" 
-                  : "opacity-0 scale-95"
-              }`}
-            >
-              <img 
-                src={activeCard.image} 
-                alt={activeCard.nameZh} 
-                className="w-full h-full object-cover select-none" 
-              />
-              {/* Golden holographic sheen on revealed card */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent pointer-events-none animate-pulse" />
-            </div>
-
-            {/* 3. The Aurora Curtain (Rises from bottom, expands and covers the entire card) */}
-            <div 
-              className={`absolute inset-x-0 bottom-0 rounded-2xl overflow-hidden pointer-events-none transition-all duration-1000 ease-out ${
-                revealPhase === "card-back" 
-                  ? "h-0 opacity-0"
-                  : revealPhase === "brush-enter"
-                  ? "h-[45%] opacity-90"
-                  : revealPhase === "aurora-expand"
-                  ? "h-[105%] opacity-100"
-                  : "h-[105%] opacity-0"
-              }`}
-            >
-              {/* Aurora Wave 1: Vivid Emerald & Cyan Aurora Stream */}
-              <div className="absolute inset-0 bg-gradient-to-t from-emerald-500/90 via-teal-400/80 to-cyan-400/85 mix-blend-screen blur-md animate-[pulse_2s_ease-in-out_infinite]" />
+            {/* -------------------------------------------------------- */}
+            {/* 1. SACRED SUMMONING MANDALA (Inspired by Manaera)        */}
+            {/* -------------------------------------------------------- */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               
-              {/* Aurora Wave 2: Cosmic Amethyst & Pink Aurora Ribbons */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-purple-600/70 via-fuchsia-400/60 to-transparent mix-blend-screen blur-lg animate-[pulse_2.5s_ease-in-out_infinite_alternate]" />
-              
-              {/* Aurora Wave 3: Radiant Golden Starlight Mist */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-300/60 to-yellow-200/80 mix-blend-screen blur-sm" />
+              {/* Ambient Radiant Glow Orb */}
+              <div 
+                className={`absolute w-80 sm:w-96 h-80 sm:h-96 rounded-full transition-all duration-1000 ${
+                  revealPhase === "summon" 
+                    ? "bg-amber-400/15 blur-2xl scale-100" 
+                    : revealPhase === "flip"
+                    ? "bg-yellow-300/30 blur-3xl scale-125"
+                    : "bg-cyan-400/10 blur-2xl scale-110"
+                }`} 
+              />
 
-              {/* Shimmering Sparkles Dancing through Aurora */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-full h-full relative">
-                  <Sparkles size={24} className="absolute bottom-8 left-1/4 text-white animate-ping" />
-                  <Sparkles size={28} className="absolute bottom-16 right-1/4 text-yellow-200 animate-pulse" />
-                  <Sparkles size={32} className="absolute top-1/3 left-1/2 -translate-x-1/2 text-cyan-200 animate-spin" style={{ animationDuration: "4s" }} />
+              {/* Expanding Shockwave Ring (Triggers at flip) */}
+              {(revealPhase === "flip" || revealPhase === "crystallize") && (
+                <div 
+                  className="absolute w-72 h-72 rounded-full border-4 border-amber-300 pointer-events-none"
+                  style={{ animation: "shockwaveRing 1.3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards" }}
+                />
+              )}
+
+              {/* God Rays Flare Beams (360-degree radial light rays) */}
+              {(revealPhase === "flip" || revealPhase === "crystallize") && (
+                <div className="absolute w-[440px] sm:w-[520px] h-[440px] sm:h-[520px] animate-god-rays pointer-events-none">
+                  <svg viewBox="0 0 500 500" className="w-full h-full opacity-60">
+                    <defs>
+                      <linearGradient id="godRayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+                        <stop offset="40%" stopColor="#fde047" stopOpacity="0.5" />
+                        <stop offset="70%" stopColor="#38bdf8" stopOpacity="0.2" />
+                        <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    {/* 16 Radial Light Rays */}
+                    {Array.from({ length: 16 }).map((_, rIdx) => {
+                      const angle = rIdx * (360 / 16);
+                      return (
+                        <polygon
+                          key={rIdx}
+                          points="250,250 242,0 258,0"
+                          fill="url(#godRayGrad)"
+                          transform={`rotate(${angle} 250 250)`}
+                        />
+                      );
+                    })}
+                  </svg>
                 </div>
+              )}
+
+              {/* Sacred Geometric Array SVG (Mandala with dual counter-rotating rings) */}
+              <div 
+                className={`w-[360px] sm:w-[420px] h-[360px] sm:h-[420px] transition-all duration-1000 ${
+                  revealPhase === "summon" 
+                    ? "opacity-90 scale-100" 
+                    : revealPhase === "flip"
+                    ? "opacity-100 scale-110"
+                    : "opacity-45 scale-95"
+                }`}
+              >
+                <svg viewBox="0 0 400 400" className="w-full h-full drop-shadow-[0_0_20px_rgba(250,204,21,0.65)]">
+                  <defs>
+                    <linearGradient id="mandalaGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#fef08a" />
+                      <stop offset="50%" stopColor="#facc15" />
+                      <stop offset="100%" stopColor="#38bdf8" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Outer Ring: Rotating Clockwise */}
+                  <g className="animate-spin-slow origin-center">
+                    <circle cx="200" cy="200" r="185" fill="none" stroke="url(#mandalaGold)" strokeWidth="1.8" strokeDasharray="6 8" opacity="0.8" />
+                    <circle cx="200" cy="200" r="172" fill="none" stroke="url(#mandalaGold)" strokeWidth="1.2" opacity="0.7" />
+                    {/* 12 Outer Celestial Orbit Nodes */}
+                    {Array.from({ length: 12 }).map((_, i) => {
+                      const ang = (i * 30 * Math.PI) / 180;
+                      const cx = 200 + 172 * Math.cos(ang);
+                      const cy = 200 + 172 * Math.sin(ang);
+                      return (
+                        <g key={i}>
+                          <circle cx={cx} cy={cy} r="4" fill="#fde047" />
+                          <circle cx={cx} cy={cy} r="7" fill="none" stroke="#67e8f9" strokeWidth="1" opacity="0.6" />
+                        </g>
+                      );
+                    })}
+                  </g>
+
+                  {/* Inner Ring: Rotating Counter-Clockwise */}
+                  <g className="animate-spin-reverse origin-center">
+                    <circle cx="200" cy="200" r="140" fill="none" stroke="url(#mandalaGold)" strokeWidth="1.5" strokeDasharray="4 6" opacity="0.75" />
+                    {/* Interlocking 12-point Sacred Star */}
+                    <polygon
+                      points="200,65 240,165 335,200 240,235 200,335 160,235 65,200 160,165"
+                      fill="none"
+                      stroke="#fde047"
+                      strokeWidth="1.5"
+                      opacity="0.8"
+                    />
+                    <polygon
+                      points="200,80 270,130 320,200 270,270 200,320 130,270 80,200 130,130"
+                      fill="none"
+                      stroke="#38bdf8"
+                      strokeWidth="1.2"
+                      opacity="0.65"
+                    />
+                    <circle cx="200" cy="200" r="95" fill="none" stroke="#facc15" strokeWidth="1" opacity="0.5" />
+                  </g>
+
+                  {/* Core Glowing Orb */}
+                  <circle cx="200" cy="200" r="40" fill="#fde047" opacity="0.25" className="animate-pulse" />
+                </svg>
+              </div>
+
+              {/* Floating Sparkle Particles */}
+              <div className="absolute inset-0 pointer-events-none">
+                <Sparkles size={22} className="absolute top-10 left-12 text-yellow-300 animate-ping" style={{ animationDuration: "2.8s" }} />
+                <Sparkles size={26} className="absolute top-16 right-12 text-cyan-300 animate-pulse" style={{ animationDuration: "2.2s" }} />
+                <Sparkles size={20} className="absolute bottom-12 left-16 text-white animate-pulse" style={{ animationDuration: "3s" }} />
+                <Sparkles size={24} className="absolute bottom-16 right-16 text-amber-300 animate-ping" style={{ animationDuration: "3.4s" }} />
               </div>
             </div>
 
-            {/* 4. The Miracle Brush ("奇蹟之筆" - Appears at bottom and paints aurora) */}
+            {/* -------------------------------------------------------- */}
+            {/* 2. THE 3D CARD OBJECT (PTCG Pocket 3D Flip & Tilt)       */}
+            {/* -------------------------------------------------------- */}
             <div 
-              className={`absolute -bottom-10 left-1/2 -translate-x-1/2 pointer-events-none transition-all duration-800 ease-out z-40 ${
-                revealPhase === "brush-enter" 
-                  ? "opacity-100 translate-y-0 scale-100" 
-                  : revealPhase === "aurora-expand"
-                  ? "opacity-80 -translate-y-16 scale-110"
-                  : "opacity-0 translate-y-10 scale-75"
-              }`}
+              className="relative w-[240px] sm:w-[270px] aspect-[1/1.52] z-30 perspective-1200 cursor-pointer"
+              style={{
+                transform: `rotateY(${cardTilt.x}deg) rotateX(${cardTilt.y}deg)`,
+                transition: revealPhase === "crystallize" ? "transform 0.15s ease-out" : "transform 0.6s ease-out",
+              }}
+              title={revealPhase === "crystallize" ? "移動滑鼠或手指可 3D 檢視卡牌燙金光澤" : undefined}
             >
-              <svg width="180" height="120" viewBox="0 0 180 120" className="drop-shadow-[0_0_15px_rgba(250,204,21,0.85)]">
-                <defs>
-                  {/* Gold Handle Gradient */}
-                  <linearGradient id="brushHandle" x1="0%" y1="100%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#78350f" />
-                    <stop offset="40%" stopColor="#d97706" />
-                    <stop offset="70%" stopColor="#fde047" />
-                    <stop offset="100%" stopColor="#ffffff" />
-                  </linearGradient>
-                  {/* Aurora Bristle Tip Gradient */}
-                  <linearGradient id="brushBristles" x1="0%" y1="100%" x2="50%" y2="0%">
-                    <stop offset="0%" stopColor="#d97706" />
-                    <stop offset="40%" stopColor="#10b981" />
-                    <stop offset="75%" stopColor="#06b6d4" />
-                    <stop offset="100%" stopColor="#ffffff" />
-                  </linearGradient>
-                </defs>
+              
+              {/* Inner 3D Card Flipper */}
+              <div 
+                className={`relative w-full h-full rounded-2xl transform-style-3d ${
+                  revealPhase === "summon" ? "animate-float-bob" : ""
+                }`}
+                style={{
+                  transform: revealPhase === "summon" ? "rotateY(0deg)" : "rotateY(180deg)",
+                  transition: "transform 1.3s cubic-bezier(0.2, 0.85, 0.35, 1.15)",
+                }}
+              >
+                
+                {/* ---------------------------------------------------- */}
+                {/* CARD BACK (Lion Painting - Visible in "summon" phase) */}
+                {/* ---------------------------------------------------- */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden backface-hidden shadow-[0_15px_45px_rgba(0,0,0,0.9),0_0_35px_rgba(250,204,21,0.35)] border-2 border-amber-300/80 bg-[#0A1128]">
+                  <img 
+                    src="/images/cards/card-back.png" 
+                    alt="極光動物魔法卡牌背 - 張景雯 Win 原創繪製" 
+                    className="w-full h-full object-cover select-none" 
+                  />
+                  {/* Subtle pulsing energy sheen */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-amber-300/10 to-transparent pointer-events-none animate-pulse" />
+                </div>
 
-                {/* Sweeping Aurora Arc painted by the brush tip */}
-                <path
-                  d="M 20 85 Q 90 40 160 85"
-                  fill="none"
-                  stroke="url(#brushBristles)"
-                  strokeWidth="5"
-                  strokeLinecap="round"
-                  className="animate-pulse"
-                />
+                {/* ---------------------------------------------------- */}
+                {/* CARD FRONT (Drawn Animal Card - Revealed via 3D Flip)*/}
+                {/* ---------------------------------------------------- */}
+                <div 
+                  className="absolute inset-0 rounded-2xl overflow-hidden backface-hidden shadow-[0_20px_50px_rgba(0,0,0,0.95),0_0_40px_rgba(250,204,21,0.6)] border-2 border-amber-300 bg-[#0A1128]"
+                  style={{ transform: "rotateY(180deg)" }}
+                >
+                  <img 
+                    src={activeCard.image} 
+                    alt={activeCard.nameZh} 
+                    className="w-full h-full object-cover select-none" 
+                  />
 
-                {/* Brush Handle (Slender Calligraphy/Oil Brush at 40 deg angle) */}
-                <path
-                  d="M 90 60 L 145 10 C 148 7, 153 7, 155 10 L 157 12 C 159 14, 159 19, 156 22 L 102 72 Z"
-                  fill="url(#brushHandle)"
-                  stroke="#fde047"
-                  strokeWidth="1.2"
-                />
+                  {/* Dynamic Holographic Foil Sheen (PTCG Pocket Rainbow Sheen Sweep) */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none mix-blend-color-dodge animate-holo-sweep opacity-75"
+                    style={{
+                      background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 45%, rgba(253,224,71,0.8) 50%, rgba(56,189,248,0.75) 55%, transparent 80%)",
+                      backgroundSize: "200% 200%",
+                    }}
+                  />
 
-                {/* Silver Ferrule */}
-                <rect x="86" y="58" width="16" height="14" rx="2" transform="rotate(-40 94 65)" fill="#e2e8f0" stroke="#f8fafc" strokeWidth="1" />
+                  {/* Ambient Golden Border Glow */}
+                  <div className="absolute inset-0 rounded-2xl border border-yellow-300/50 pointer-events-none" />
 
-                {/* Glowing Aurora Bristles */}
-                <path
-                  d="M 85 70 C 80 75, 68 85, 65 92 C 72 90, 84 82, 94 77 Z"
-                  fill="url(#brushBristles)"
-                  filter="drop-shadow(0 0 8px #10b981)"
-                />
+                  {/* Specular Interactive Glass Glint shifting with tilt */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none opacity-40 transition-opacity"
+                    style={{
+                      background: `radial-gradient(circle at ${50 + cardTilt.x * 2}% ${50 - cardTilt.y * 2}%, rgba(255,255,255,0.6) 0%, transparent 60%)`,
+                    }}
+                  />
+                </div>
 
-                {/* Concentric Starlight Sparkle at the brush contact point */}
-                <circle cx="65" cy="92" r="6" fill="#ffffff" className="animate-ping" />
-                <circle cx="65" cy="92" r="3" fill="#fde047" />
-              </svg>
+              </div>
             </div>
 
-            {/* Starburst rays when card front crystallizes */}
-            {revealPhase === "card-reveal" && (
-              <div className="absolute -inset-8 flex items-center justify-center pointer-events-none animate-fadeIn">
-                <div className="w-full h-full rounded-3xl border-2 border-gold-end animate-ping opacity-70" />
+          </div>
+
+          {/* -------------------------------------------------------- */}
+          {/* 3. REVEALED CARD DETAILS & ACTIONS (In "crystallize" phase)*/}
+          {/* -------------------------------------------------------- */}
+          {revealPhase === "crystallize" ? (
+            <div className="space-y-4 max-w-md mx-auto animate-fadeIn z-30">
+              
+              <div className="space-y-1">
+                <div className="text-xs text-amber-300 font-bold tracking-widest uppercase">
+                  NO. 0{activeCard.id} ✦ {activeCard.keywordZh}
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold tracking-widest text-gradient-gold font-serif drop-shadow-md">
+                  【{activeCard.nameZh}】・為你而來
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-200 leading-relaxed italic px-2 pt-1 font-medium">
+                  “{activeCard.quoteZh}”
+                </p>
               </div>
-            )}
 
-          </div>
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setGameState("result")}
+                  className="w-full sm:w-auto px-7 py-3 rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black font-bold text-sm tracking-wider transition-all shadow-xl hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <BookOpen size={16} />
+                  <span>閱讀手冊深度故事與指引</span>
+                  <ArrowRight size={16} />
+                </button>
 
-          {/* Dynamic Poetic Progress Text */}
-          <div className="space-y-1">
-            <h3 className="text-xl sm:text-2xl font-bold tracking-widest text-gradient-gold font-serif animate-pulse">
-              {revealPhase === "card-back" && "奇蹟正在顯化..."}
-              {revealPhase === "brush-enter" && "奇蹟之筆・勾勒極光流彩..."}
-              {revealPhase === "aurora-expand" && "極光湧現・喚醒守護生靈..."}
-              {revealPhase === "card-reveal" && `【${activeCard.nameZh}】・為你而來`}
-            </h3>
-            <p className="text-xs text-gray-300 tracking-wider">
-              {revealPhase === "card-reveal" 
-                ? activeCard.keywordZh
-                : "深呼吸，感受極光頻率與心靈的共振"}
-            </p>
-          </div>
+                <button
+                  type="button"
+                  onClick={handleResetDraw}
+                  className="w-full sm:w-auto px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold text-xs sm:text-sm tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <RotateCcw size={15} />
+                  <span>再抽一張</span>
+                </button>
+              </div>
+
+              <div className="text-[11px] text-gray-400 tracking-wider">
+                ✦ 提示：在牌面上移動滑鼠或手指，即可感受 3D 燙金全像炫光 ✦
+              </div>
+
+            </div>
+          ) : (
+            /* Progress status text during summon & flip phases */
+            <div className="space-y-1">
+              <h3 className="text-lg sm:text-xl font-bold tracking-widest text-gradient-gold font-serif animate-pulse">
+                {revealPhase === "summon" && "神聖幾何共振・召喚陣展開中..."}
+                {revealPhase === "flip" && "神光破曉・守護生靈現身..."}
+              </h3>
+              <p className="text-xs text-gray-300 tracking-wider">
+                深呼吸，感受守護動物與心靈的共鳴頻率
+              </p>
+            </div>
+          )}
 
         </div>
       )}

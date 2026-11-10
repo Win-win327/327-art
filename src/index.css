@@ -106,3 +106,101 @@ input, button, select, textarea, label {
         letter-spacing: 0.08em;
     }
 }
+
+/* ============================================================ */
+/* DREAMY CARD SUMMON & PTCG / MANAERA REVEAL ANIMATIONS         */
+/* ============================================================ */
+
+@keyframes spinSlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spinReverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes floatBob {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.8deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes shockwaveRing {
+  0% {
+    transform: scale(0.4);
+    opacity: 1;
+    border-width: 6px;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+@keyframes holoSweep {
+  0% {
+    transform: translateX(-150%) translateY(-50%) rotate(35deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateX(250%) translateY(50%) rotate(35deg);
+    opacity: 0;
+  }
+}
+
+@keyframes godRaysPulse {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(0.95) rotate(0deg);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.15) rotate(15deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 28s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spinReverse 22s linear infinite;
+}
+
+.animate-float-bob {
+  animation: floatBob 3.6s ease-in-out infinite;
+}
+
+.animate-god-rays {
+  animation: godRaysPulse 4s ease-in-out infinite;
+}
+
+.animate-holo-sweep {
+  animation: holoSweep 2.8s ease-in-out infinite;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
