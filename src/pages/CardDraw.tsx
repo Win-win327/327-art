@@ -209,26 +209,43 @@ function playRapidSpinSound() {
   }
 }
 
-// Web Audio API Synthesizer for energetic card spring ejection & crystalline chime
-function playCardEjectSound() {
+// Web Audio API Synthesizer for sacred manifestation & resonant singing bowl harmonic chime
+function playSacredManifestSound() {
   try {
     const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
     if (!AudioCtx) return;
     const ctx = new AudioCtx();
     const now = ctx.currentTime;
 
-    // Snappy chime triad (E5, B5, E6)
-    [659.25, 987.77, 1318.51].forEach((freq, idx) => {
+    // 1. Deep singing bowl resonant harmonic root (C3, G3, C4)
+    [130.81, 196.0, 261.63].forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(freq, now);
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.12 / (idx + 1), now + 0.18);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 2.8);
+    });
+
+    // 2. High ethereal cathedral bells blooming smoothly (G4, C5, E5, G5)
+    [392.0, 523.25, 659.25, 783.99].forEach((freq, idx) => {
+      const delay = 0.08 * idx;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = "triangle";
-      osc.frequency.setValueAtTime(freq, now + idx * 0.035);
-      gain.gain.setValueAtTime(0.14, now + idx * 0.035);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.035 + 1.4);
+      osc.frequency.setValueAtTime(freq, now + delay);
+      gain.gain.setValueAtTime(0, now + delay);
+      gain.gain.linearRampToValueAtTime(0.08, now + delay + 0.12);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 2.5);
       osc.connect(gain);
       gain.connect(ctx.destination);
-      osc.start(now + idx * 0.035);
-      osc.stop(now + idx * 0.035 + 1.5);
+      osc.start(now + delay);
+      osc.stop(now + delay + 2.6);
     });
   } catch (e) {
     // Audio context may be restricted by autoplay policy
@@ -385,16 +402,16 @@ export default function CardDraw() {
         setRevealPhase("aurora-smoke");
         if (soundEnabled) playMysticChime();
 
-        // After 1100ms -> Phase 4: Spring Ejection / Pop Out ("牌卡像是彈射出來一樣，才是最後抽出的卡片")
+        // After 1200ms -> Phase 4: Sacred Ritualistic Manifestation (破霧顯聖・神聖降臨)
         setTimeout(() => {
           setRevealPhase("eject");
-          if (soundEnabled) playCardEjectSound();
+          if (soundEnabled) playSacredManifestSound();
 
-          // After 1000ms -> Transition to Final Result View ("最後停留在抽出牌卡的畫面，改回上一版的就好，字的位置方式也參照上一個版本")
+          // After 1350ms -> Settle into Final Interpretation Screen
           setTimeout(() => {
             setGameState("result");
-          }, 1000);
-        }, 1100);
+          }, 1350);
+        }, 1200);
       }, 1600);
     }, 900);
   };
@@ -1090,7 +1107,7 @@ export default function CardDraw() {
               {revealPhase === "summon" && "✦ 神聖召喚・共振蓄能 ✦"}
               {revealPhase === "rapid-spin" && "✦ 牌卡感應翻轉・調頻共振 ✦"}
               {revealPhase === "aurora-smoke" && "✦ 極光幻霧匯聚・即將顯化 ✦"}
-              {revealPhase === "eject" && `✦ 守護生靈【${activeCard.nameZh}】顯化 ✦`}
+              {revealPhase === "eject" && `✦ 守護生靈【${activeCard.nameZh}】神聖降臨 ✦`}
             </span>
           </div>
 
@@ -1115,11 +1132,10 @@ export default function CardDraw() {
                 }`} 
               />
 
-              {/* Expanding Shockwave Ring on Ejection */}
+              {/* Expanding Sacred Halo Ring on Manifestation (Smooth & Ethereal) */}
               {revealPhase === "eject" && (
                 <div 
-                  className="absolute w-72 h-72 rounded-full border-4 border-amber-300 pointer-events-none"
-                  style={{ animation: "shockwaveRing 1.1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards" }}
+                  className="absolute w-72 h-72 rounded-full border-2 border-amber-300/80 animate-sacred-ring pointer-events-none"
                 />
               )}
 
@@ -1207,9 +1223,7 @@ export default function CardDraw() {
                     ? "animate-float-bob" 
                     : revealPhase === "rapid-spin"
                     ? "animate-rapid-card-spin"
-                    : revealPhase === "aurora-smoke"
-                    ? "scale-100"
-                    : "animate-card-ejection"
+                    : "scale-100"
                 }`}
               >
                 
@@ -1315,17 +1329,17 @@ export default function CardDraw() {
                   </div>
                 )}
 
-                {/* When in "eject" phase: Spring Ejection / Pop Out ("牌卡像是彈射出來一樣") */}
+                {/* When in "eject" phase: Sacred Ritualistic Manifestation (神聖破霧降臨・凌空顯聖 - 典雅神聖、無跳動感) */}
                 {revealPhase === "eject" && (
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.95),0_0_50px_rgba(250,204,21,0.7)] border-2 border-amber-300 bg-[#0A1128]">
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-[0_25px_65px_rgba(0,0,0,0.95),0_0_55px_rgba(250,204,21,0.6)] border-2 border-amber-300 bg-[#0A1128] animate-card-manifest">
                     <img 
                       src={activeCard.image} 
                       alt={activeCard.nameZh} 
                       className="w-full h-full object-cover select-none" 
                     />
-                    {/* Subtle golden shine */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent pointer-events-none" />
-                    <div className="absolute inset-0 rounded-2xl border border-yellow-300/60 pointer-events-none" />
+                    {/* Ethereal golden radiance overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-400/20 via-white/15 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 rounded-2xl border border-yellow-300/70 pointer-events-none" />
                   </div>
                 )}
 
@@ -1340,7 +1354,7 @@ export default function CardDraw() {
               {revealPhase === "summon" && "神聖幾何共振・魔法陣展開..."}
               {revealPhase === "rapid-spin" && "牌卡感應翻轉・調和心念頻率..."}
               {revealPhase === "aurora-smoke" && "極光幻霧凝聚・守護生靈即將現身..."}
-              {revealPhase === "eject" && `【${activeCard.nameZh}】・彈射顯化！`}
+              {revealPhase === "eject" && `【${activeCard.nameZh}】・破霧顯聖`}
             </h3>
             <p className="text-xs text-gray-300 tracking-wider">
               {revealPhase === "eject" 
