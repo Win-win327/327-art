@@ -173,12 +173,8 @@ export default function CardDraw() {
   // Deck spread cards count
   const SPREAD_COUNT = 15;
 
-  // Start the Hindu shuffle mini-game
+  // Start the Hindu shuffle mini-game (Always accessible for testing)
   const handleStartShuffle = () => {
-    if (remainingFreeDraws <= 0) {
-      setShowQuotaModal(true);
-      return;
-    }
     if (soundEnabled) playMysticChime();
     setShuffleCount(0);
     setShufflePhase("split");
@@ -219,7 +215,7 @@ export default function CardDraw() {
   const handleSelectCard = (index: number) => {
     if (soundEnabled) playMysticChime();
 
-    // Deduct one draw from daily quota
+    // Deduct one draw from daily quota (can reach 0 without locking test)
     deductDrawCount();
 
     // Pick a card from dataset
@@ -239,12 +235,8 @@ export default function CardDraw() {
     }, 800);
   };
 
-  // Reset to draw again
+  // Reset to draw again (Never blocks testing)
   const handleResetDraw = () => {
-    if (remainingFreeDraws <= 0) {
-      setShowQuotaModal(true);
-      return;
-    }
     setIsFlipped(false);
     setSelectedCards([]);
     setShuffleCount(0);
@@ -501,13 +493,23 @@ export default function CardDraw() {
                   <Sparkles size={16} className="text-gold-end" />
                   <span>每日免費 3 次抽牌</span>
                 </span>
-                <span className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
-                  remainingFreeDraws > 0
-                    ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
-                    : "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                }`}>
-                  今日剩餘：{remainingFreeDraws} / {MAX_FREE_DRAWS} 次
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
+                    remainingFreeDraws > 0
+                      ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                      : "bg-amber-500/20 text-amber-300 border-amber-500/40"
+                  }`}>
+                    今日剩餘：{remainingFreeDraws} / {MAX_FREE_DRAWS} 次
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleResetQuotaForTest}
+                    className="text-[11px] px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white border border-white/20 transition-all cursor-pointer font-medium"
+                    title="重設測試額度（隨時恢復 3 次）"
+                  >
+                    重設額度
+                  </button>
+                </div>
               </div>
 
               {/* 3 Visual Quota Crystals */}
@@ -530,7 +532,7 @@ export default function CardDraw() {
 
               {/* Additional Paid Draws Notice */}
               <div className="text-xs text-gray-300 leading-relaxed border-t border-white/10 pt-3 space-y-1">
-                <p>✦ 每日提供 3 次免費神諭抽牌體驗。</p>
+                <p>✦ 每日提供 3 次免費神諭抽牌體驗（測試模式可無限暢抽）。</p>
                 <p className="text-amber-300/90">
                   ✦ 若需進行更多次深度探索與問題指引，付費加購解鎖功能（例如 10 次 NT$ 100）即將上線，敬請期待！
                 </p>
@@ -539,23 +541,15 @@ export default function CardDraw() {
 
           </div>
 
-          {/* Golden Start Button (Clean, without parenthetical quota count!) */}
+          {/* Golden Start Button (Always active so user can freely test anytime!) */}
           <div className="pt-2">
             <button
               type="button"
               onClick={handleStartShuffle}
-              className={`px-10 py-4 rounded-full font-bold tracking-[3px] text-base sm:text-lg transition-all shadow-2xl flex items-center justify-center gap-3 mx-auto cursor-pointer ${
-                remainingFreeDraws > 0
-                  ? "bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black hover:scale-105 active:scale-95"
-                  : "bg-gradient-to-r from-amber-600/50 to-yellow-600/50 text-white/80 border border-amber-400/30 hover:scale-105"
-              }`}
+              className="px-10 py-4 rounded-full font-bold tracking-[3px] text-base sm:text-lg transition-all shadow-2xl flex items-center justify-center gap-3 mx-auto cursor-pointer bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-black hover:scale-105 active:scale-95 shadow-gold-end/30"
             >
               <Sparkles size={20} className="animate-spin text-inherit" style={{ animationDuration: "6s" }} />
-              <span>
-                {remainingFreeDraws > 0 
-                  ? (isEn ? "Begin Shuffling Cards" : isJa ? "カードをシャッフルする" : "開始感應洗牌") 
-                  : (isEn ? "Daily Limit Reached" : "今日免費次數已用完")}
-              </span>
+              <span>{isEn ? "Begin Shuffling Cards" : isJa ? "カードをシャッフルする" : "開始感應洗牌"}</span>
             </button>
           </div>
 
@@ -633,7 +627,7 @@ export default function CardDraw() {
               輕觸洗牌・切牌調頻
             </h2>
             <p className="text-xs sm:text-sm text-gray-300 max-w-lg mx-auto">
-              輕觸洗牌時，兩疊牌會疊合歸一、再攤開為二。每一次切換，都在調律你與守護動物的能量共振。
+              每一次切換牌疊，都在調律你與守護動物的心念共振。
             </p>
           </div>
 
@@ -801,7 +795,7 @@ export default function CardDraw() {
 
             {/* Tap cue tag overlay */}
             <div className="absolute bottom-3 inset-x-8 py-1.5 px-3 rounded-lg bg-black/65 backdrop-blur-md border border-white/20 text-[11px] text-amber-200 tracking-wider text-center pointer-events-none group-hover:border-gold-end/50">
-              {isMerged ? "✦ 疊合歸一 ✦" : "✦ 輕觸畫面洗牌（合一後再攤開）✦"}
+              {isMerged ? "✦ 疊合歸一 ✦" : "✦ 輕觸畫面洗牌 ✦"}
             </div>
 
           </div>
