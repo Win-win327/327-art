@@ -95,7 +95,7 @@ export const artworks: Artwork[] = [
   {
     id: "co-dog",
     title: "可多",
-    img: "https://i.ibb.co/XxyMy1C5/port-aurora-09.jpg",
+    img: "/images/port-aurora-09.jpg",
     year: "2022",
     size: "60.5x50cm",
     media: "油畫 Oil on Canvas",
@@ -105,7 +105,7 @@ export const artworks: Artwork[] = [
   {
     id: "dance-white-whale",
     title: "舞動白鯨",
-    img: "https://i.ibb.co/5xF9Qn0Y/port-aurora-010.jpg",
+    img: "/images/port-aurora-010.jpg",
     year: "2021",
     size: "31.5x41cm",
     media: "油畫 Oil on Canvas",
@@ -115,7 +115,7 @@ export const artworks: Artwork[] = [
   {
     id: "tiger-cat",
     title: "鏡",
-    img: "https://i.ibb.co/601nCMjh/port-aurora-011.jpg",
+    img: "/images/port-aurora-011.jpg",
     year: "2021",
     size: "31x41cm",
     media: "油畫 Oil on Canvas",
@@ -125,7 +125,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-dragon",
     title: "極光舞龍",
-    img: "https://i.ibb.co/XrhPwhLN/port-aurora-012.jpg",
+    img: "/images/port-aurora-012.jpg",
     year: "2024",
     size: "45.5x60.5cm",
     media: "油畫 Oil on Canvas",
@@ -135,7 +135,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-owl-sight",
     title: "貓頭鷹的對視",
-    img: "https://i.ibb.co/0Rmt8xhy/port-aurora-013.jpg",
+    img: "/images/port-aurora-013.jpg",
     year: "2020",
     size: "53x45.5cm",
     media: "油畫 Oil on Canvas",
@@ -145,7 +145,7 @@ export const artworks: Artwork[] = [
   {
     id: "wolf-howl",
     title: "狼 喚醒",
-    img: "https://i.ibb.co/TBVFPXMH/port-aurora-014.jpg",
+    img: "/images/port-aurora-014.jpg",
     year: "2022",
     size: "40.5x53cm",
     media: "油畫 Oil on Canvas",
@@ -155,7 +155,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-water-dragon",
     title: "極光海龍",
-    img: "https://i.ibb.co/5xgHRjgp/port-aurora-015.jpg",
+    img: "/images/port-aurora-015.jpg",
     year: "2021",
     size: "45.5x53cm",
     media: "油畫 Oil on Canvas",
@@ -165,7 +165,7 @@ export const artworks: Artwork[] = [
   {
     id: "lover-birds",
     title: "愛",
-    img: "https://i.ibb.co/YB7r5GQc/port-aurora-016.jpg",
+    img: "/images/port-aurora-016.jpg",
     year: "2022",
     size: "50x60cm",
     media: "油畫 Oil on Canvas",
