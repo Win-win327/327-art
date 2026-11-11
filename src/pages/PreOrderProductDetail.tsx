@@ -32,11 +32,11 @@ const PREORDER_DATA: Record<string, PreOrderProduct> = {
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     targetOrders: 15,
     images: [
-      "https://i.ibb.co/YBMhxtr4/IMG-0517.jpg",
-      "https://i.ibb.co/XhyXVWP/IMG-0518.jpg",
-      "https://i.ibb.co/jkVHxJg9/IMG-0520.jpg",
-      "https://i.ibb.co/nMfdJ7RF/image.jpg",
-      "https://i.ibb.co/JjFYX3gS/IMG-0521.jpg"
+      "/images/IMG-0517.jpg",
+      "/images/IMG-0518.jpg",
+      "/images/IMG-0520.jpg",
+      "/images/toucan-art-cutout.jpg",
+      "/images/IMG-0521.jpg"
     ]
   },
   "po-2": {

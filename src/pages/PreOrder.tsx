@@ -11,7 +11,7 @@ const PREORDER_ITEMS = [
   {
     id: "po-1",
     nameZh: "潑彩大嘴鳥T恤",
-    image: "https://i.ibb.co/YBMhxtr4/IMG-0517.jpg",
+    image: "/images/IMG-0517.jpg",
     currentOrders: 0,
     targetOrders: 15
   },
