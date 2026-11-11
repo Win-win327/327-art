@@ -175,7 +175,7 @@ export const artworks: Artwork[] = [
   {
     id: "elephant-protect",
     title: "守護 象神",
-    img: "https://i.ibb.co/zphDs8w/port-aurora-017.jpg",
+    img: "/images/port-aurora-017.jpg",
     year: "2022",
     size: "53x65cm",
     media: "油畫 Oil on Canvas",
@@ -185,7 +185,7 @@ export const artworks: Artwork[] = [
   {
     id: "freedom-horses",
     title: "天馬",
-    img: "https://i.ibb.co/nqVnxmct/port-aurora-018.jpg",
+    img: "/images/port-aurora-018.jpg",
     year: "2022",
     size: "未提尺寸規格",
     media: "油畫 Oil on Canvas",
@@ -196,7 +196,7 @@ export const artworks: Artwork[] = [
   {
     id: "warrior-deer",
     title: "勇者鹿",
-    img: "https://i.ibb.co/B5pJtF9d/port-aurora-019.jpg",
+    img: "/images/port-aurora-019.jpg",
     year: "2020",
     size: "50x50cm",
     media: "油畫 Oil on Canvas",
@@ -206,7 +206,7 @@ export const artworks: Artwork[] = [
   {
     id: "colorful-lionking",
     title: "唯我獨尊",
-    img: "https://i.ibb.co/Q75tYqxb/port-aurora-020.jpg",
+    img: "/images/port-aurora-020.jpg",
     year: "2025",
     size: "60.5x72.5cm",
     media: "油畫 Oil on Canvas",
@@ -216,7 +216,7 @@ export const artworks: Artwork[] = [
   {
     id: "whale-eye",
     title: "鯨 之 眼",
-    img: "https://i.ibb.co/mrV6MsRc/port-aurora-021.jpg",
+    img: "/images/port-aurora-021.jpg",
     year: "2021",
     size: "未提尺寸規格",
     media: "油畫 Oil on Canvas",
@@ -227,7 +227,7 @@ export const artworks: Artwork[] = [
   {
     id: "new-earth",
     title: "新地球",
-    img: "https://i.ibb.co/5hJGrkD0/port-aurora-022.jpg",
+    img: "/images/port-aurora-022.jpg",
     year: "2022",
     size: "45.5x53cm",
     media: "油畫 Oil on Canvas",
@@ -237,7 +237,7 @@ export const artworks: Artwork[] = [
   {
     id: "phoenix",
     title: "浴火鳳凰",
-    img: "https://i.ibb.co/LzTn4kNT/port-aurora-023.jpg",
+    img: "/images/port-aurora-023.jpg",
     year: "2021",
     size: "未提尺寸規格",
     media: "油畫 Oil on Canvas",
@@ -248,7 +248,7 @@ export const artworks: Artwork[] = [
   {
     id: "expand-deer-eif",
     title: "擴展",
-    img: "https://i.ibb.co/9mG0ktWN/port-aurora-024.jpg",
+    img: "/images/port-aurora-024.jpg",
     year: "2022",
     size: "未提尺寸規格",
     media: "油畫 Oil on Canvas",
