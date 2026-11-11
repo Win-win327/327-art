@@ -61,7 +61,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="mb-5">
                 <OptimizedImage 
-                  src="https://i.ibb.co/d0fNk4fW/hero-aurora-01.jpg" 
+                  src="/images/hero-aurora-01.jpg" 
                   alt={t("home.portfolio.calm_title")} 
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]" 
                   wrapperClassName="mb-4 shadow-lg rounded min-h-[220px] bg-white/5"
@@ -79,7 +79,7 @@ export default function Home() {
               </div>
               <div className="mb-5">
                 <OptimizedImage 
-                  src="https://i.ibb.co/848MhMMS/hero-aurora-02.jpg" 
+                  src="/images/hero-aurora-02.jpg" 
                   alt={t("home.portfolio.chief_phoenix")} 
                   className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]" 
                   wrapperClassName="mb-4 shadow-lg rounded"
@@ -103,7 +103,7 @@ export default function Home() {
           <Link to="/portfolio#splash-group" className="block group">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="mb-5">
-                <OptimizedImage src="https://i.ibb.co/Ndr5zW6x/hero-splash-01.jpg" alt={t("home.portfolio.unicorn_title")} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]" wrapperClassName="mb-4 shadow-lg rounded" />
+                <OptimizedImage src="/images/hero-splash-01.jpg" alt={t("home.portfolio.unicorn_title")} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]" wrapperClassName="mb-4 shadow-lg rounded" />
                 <div>
                   <h4 className="text-xl mb-1 text-gray-900">{t("home.portfolio.unicorn_title")}</h4>
                   <p className="font-en text-sm text-gray-600 mb-2">{t("home.portfolio.unicorn_spec")}</p>
@@ -112,7 +112,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="mb-5">
-                <OptimizedImage src="https://i.ibb.co/VWZqmygt/hero-splash-02.jpg" alt={t("home.portfolio.dragon_title")} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]" wrapperClassName="mb-4 shadow-lg rounded" />
+                <OptimizedImage src="/images/hero-splash-02.jpg" alt={t("home.portfolio.dragon_title")} className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]" wrapperClassName="mb-4 shadow-lg rounded" />
                 <div>
                   <h4 className="text-xl mb-1 text-gray-900">{t("home.portfolio.dragon_title")}</h4>
                   <p className="font-en text-sm text-gray-600 mb-2">{t("home.portfolio.dragon_spec")}</p>

@@ -323,7 +323,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-dragon-trombone",
     title: "神 龍 （長號）",
-    img: "https://i.ibb.co/VWZqmygt/hero-splash-02.jpg",
+    img: "/images/hero-splash-02.jpg",
     year: "2025",
     size: "60.5x72.5cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
