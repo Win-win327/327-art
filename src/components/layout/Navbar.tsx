@@ -70,12 +70,12 @@ export default function Navbar() {
         className="flex items-center gap-2 sm:gap-3 md:gap-4 group"
       >
         <img 
-          src="https://i.ibb.co/WWyrjXQZ/logo.png" 
+          src="/images/logo.png" 
           alt="327 Logo" 
           className="h-[46px] sm:h-[56px] md:h-[76px] w-auto object-contain" 
         />
         <img 
-          src="https://i.ibb.co/pt9BLgH/brand-text.jpg" 
+          src="/images/brand-text.jpg" 
           alt="327 ART" 
           className="h-[40px] sm:h-[50px] md:h-[68px] w-auto mix-blend-screen brightness-125 contrast-110 object-contain" 
         />

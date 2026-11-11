@@ -87,8 +87,10 @@ export default function PageSEO() {
     setMetaTag("property", "og:title", activeTitle);
     setMetaTag("property", "og:description", activeDescription);
     setMetaTag("property", "og:url", `https://327-art.com${path === "/" ? "/" : path}`);
+    setMetaTag("property", "og:image", "https://327-art.com/images/logo.png");
     setMetaTag("name", "twitter:title", activeTitle);
     setMetaTag("name", "twitter:description", activeDescription);
+    setMetaTag("name", "twitter:image", "https://327-art.com/images/logo.png");
 
     // Update Google Site Verification if present
     if (config.googleSiteVerification && config.googleSiteVerification.trim()) {
