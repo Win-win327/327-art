@@ -20,12 +20,12 @@ const storyImages: Record<string, string> = {
 
 const images = [
   "/images/card-01.jpg",
-  "https://i.ibb.co/tMwHqtdP/card-02.jpg",
-  "https://i.ibb.co/wFbbYXNN/card-03.jpg",
-  "https://i.ibb.co/ds4gm9V1/card-04.jpg",
-  "https://i.ibb.co/k2N4XPQM/card-05.jpg",
-  "https://i.ibb.co/qFr2Tdqr/card-06.jpg",
-  "https://i.ibb.co/tTJPKvDB/card-07.jpg",
+  "/images/card-02.jpg",
+  "/images/card-03.jpg",
+  "/images/card-04.jpg",
+  "/images/card-05.jpg",
+  "/images/card-06.jpg",
+  "/images/card-07.jpg",
 ];
 
 const productInfo = {
