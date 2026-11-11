@@ -50,9 +50,9 @@ const PREORDER_DATA: Record<string, PreOrderProduct> = {
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     targetOrders: 15,
     images: [
-      "https://i.ibb.co/0jzqFCK4/IMG-0514.jpg",
-      "https://i.ibb.co/HDXY5pm5/IMG-0516.jpg",
-      "https://i.ibb.co/zW3Mrhb2/IMG-0515.jpg"
+      "/images/IMG-0514.jpg",
+      "/images/IMG-0516.jpg",
+      "/images/IMG-0515.jpg"
     ]
   }
 };

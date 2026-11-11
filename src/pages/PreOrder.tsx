@@ -18,7 +18,7 @@ const PREORDER_ITEMS = [
   {
     id: "po-2",
     nameZh: "潑彩小貓T恤",
-    image: "https://i.ibb.co/0jzqFCK4/IMG-0514.jpg",
+    image: "/images/IMG-0514.jpg",
     currentOrders: 0,
     targetOrders: 15
   }
