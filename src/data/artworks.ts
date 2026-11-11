@@ -15,7 +15,7 @@ export const artworks: Artwork[] = [
   {
     id: "lion-king",
     title: "獅王",
-    img: "/images/home-art1.jpg",
+    img: "/images/port-aurora-01.jpg",
     year: "2020",
     size: "45.5x53cm",
     media: "油畫 Oil on Canvas",
@@ -25,7 +25,7 @@ export const artworks: Artwork[] = [
   {
     id: "luky-whale",
     title: "幸運",
-    img: "https://i.ibb.co/Z1T1v6n2/port-aurora-02.jpg",
+    img: "/images/port-aurora-02.jpg",
     year: "2020",
     size: "33x45.5cm",
     media: "油畫 Oil on Canvas",
@@ -35,7 +35,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-dolphin",
     title: "極光海豚",
-    img: "/images/home-art2.jpg",
+    img: "/images/port-aurora-03.jpg",
     year: "2019",
     size: "31.5x41cm",
     media: "油畫 Oil on Canvas",
@@ -45,7 +45,7 @@ export const artworks: Artwork[] = [
   {
     id: "black-panther",
     title: "幻象 黑豹",
-    img: "https://i.ibb.co/Pngxt4W/port-aurora-04.jpg",
+    img: "/images/port-aurora-04.jpg",
     year: "2020",
     size: "50x60cm",
     media: "油畫 Oil on Canvas",
@@ -55,7 +55,7 @@ export const artworks: Artwork[] = [
   {
     id: "calm-white-lion",
     title: "平靜 白獅",
-    img: "https://i.ibb.co/pBx6NGYN/port-aurora-05.jpg",
+    img: "/images/port-aurora-05.jpg",
     year: "2021",
     size: "53x45.5cm",
     media: "油畫 Oil on Canvas",
@@ -65,7 +65,7 @@ export const artworks: Artwork[] = [
   {
     id: "chief-phoenix",
     title: "酋長鳳凰",
-    img: "https://i.ibb.co/sdt0XNWk/port-aurora-06.jpg",
+    img: "/images/port-aurora-06.jpg",
     year: "2024",
     size: "53x65cm",
     media: "油畫 Oil on Canvas",
@@ -75,7 +75,7 @@ export const artworks: Artwork[] = [
   {
     id: "colorful-bigcat",
     title: "彩之光 大貓",
-    img: "https://i.ibb.co/cc5Rk8Qf/port-aurora-07.jpg",
+    img: "/images/port-aurora-07.jpg",
     year: "2024",
     size: "50x60.5cm",
     media: "油畫 Oil on Canvas",
@@ -85,7 +85,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-phoenix",
     title: "極光鳳凰",
-    img: "https://i.ibb.co/KjBDpL5B/port-aurora-08.jpg",
+    img: "/images/port-aurora-08.jpg",
     year: "2024",
     size: "50x60cm",
     media: "油畫 Oil on Canvas",
