@@ -29,7 +29,7 @@ export default function About() {
           <div className="flex-shrink-0 order-1 md:order-2">
             <div className="w-[200px] h-[200px] md:w-[280px] md:h-[280px] rounded-full overflow-hidden border-4 border-gold-end shadow-2xl">
               <img
-                src="https://i.ibb.co/Q7Sw6VBN/avatar.png"
+                src="/images/avatar.png"
                 alt={t("about.avatar_alt")}
                 className="w-full h-full object-cover"
               />
