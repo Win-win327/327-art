@@ -425,7 +425,7 @@ export const artworks: Artwork[] = [
   {
     id: "tw-leopard-cat",
     title: "石虎",
-    img: "https://i.ibb.co/RTL4xntX/2.jpg",
+    img: "/images/tw-leopard-cat.jpg",
     year: "2026",
     size: "65x53cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -435,7 +435,7 @@ export const artworks: Artwork[] = [
   {
     id: "tw-blue-magpie",
     title: "台灣藍鵲",
-    img: "https://i.ibb.co/ywy703J/2.jpg",
+    img: "/images/tw-blue-magpie.jpg",
     year: "2026",
     size: "60.5x72.5cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -445,7 +445,7 @@ export const artworks: Artwork[] = [
   {
     id: "tw-black-bear",
     title: "台灣黑熊",
-    img: "https://i.ibb.co/4Rvs7qJZ/image.jpg",
+    img: "/images/tw-black-bear.jpg",
     year: "2026",
     size: "未提尺寸規格",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
