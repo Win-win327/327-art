@@ -303,7 +303,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-fly-uncorni",
     title: "飛越獨角獸",
-    img: "https://i.ibb.co/8gSSYtxf/port-splash-01.jpg",
+    img: "/images/port-splash-01.jpg",
     year: "2025",
     size: "72.5x60.5cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -313,7 +313,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-dragon-doublebass",
     title: "神 龍 （低音大提琴）",
-    img: "https://i.ibb.co/QjdQf6hL/port-splash-02.jpg",
+    img: "/images/port-splash-02.jpg",
     year: "2025",
     size: "60.5x72.5cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -323,7 +323,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-dragon-trombone",
     title: "神 龍 （長號）",
-    img: "/images/hero-splash-02.jpg",
+    img: "/images/port-splash-03.jpg",
     year: "2025",
     size: "60.5x72.5cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -333,7 +333,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-dragon-piano",
     title: "神 龍 （鋼琴）",
-    img: "https://i.ibb.co/mC7cmN3G/port-splash-04.jpg",
+    img: "/images/port-splash-04.jpg",
     year: "2025",
     size: "60.5x72.5cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -343,7 +343,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-toucan",
     title: "大嘴鳥",
-    img: "https://i.ibb.co/VcmDj0kM/port-splash-05.jpg",
+    img: "/images/port-splash-05.jpg",
     year: "2023",
     size: "未提尺寸規格",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
