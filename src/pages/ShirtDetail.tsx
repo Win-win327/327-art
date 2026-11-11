@@ -12,7 +12,7 @@ const productData = {
   originalPrice: 1680,
   sizes: ["XS", "S", "M", "L", "XL", "XXL"],
   images: [
-    "https://i.ibb.co/Q3g3HyLQ/IMG-0525.jpg",
+    "/images/IMG-0525.jpg",
     "https://i.ibb.co/cK4YYBMT/IMG-0524.jpg",
     "https://i.ibb.co/svtt9tv0/IMG-0526.jpg"
   ]
@@ -302,7 +302,7 @@ export default function ShirtDetail() {
           <Link to="/shop/magic-cards" className="group flex flex-col sm:flex-row bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-gold-end/40 hover:bg-white/10 transition-all shadow-xl max-w-2xl mx-auto items-center">
             <div className="w-full sm:w-[200px] aspect-square shrink-0 bg-black/20 overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-black/60 to-transparent z-10 pointer-events-none" />
-              <img src="https://i.ibb.co/MyKzGnTB/card-01.jpg" alt="極光動物魔法卡" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src="/images/card-01.jpg" alt="極光動物魔法卡" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="p-6 flex-1 text-center sm:text-left flex flex-col justify-center w-full">
               <h4 className="text-xl text-white font-bold mb-2 tracking-widest font-en">

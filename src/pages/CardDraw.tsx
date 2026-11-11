@@ -435,7 +435,7 @@ export default function CardDraw() {
       titleJa: "オーロラ・マジカル・アニマル・カード",
       price: 1280,
       quantity: 1,
-      image: "https://i.ibb.co/MyKzGnTB/card-01.jpg"
+      image: "/images/card-01.jpg"
     });
     navigate("/cart");
   };

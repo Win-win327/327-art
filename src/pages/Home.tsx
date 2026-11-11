@@ -143,7 +143,7 @@ export default function Home() {
           {/* Product 1 */}
           <div className="bg-white/5 p-5 rounded-lg border border-white/10">
             <div className="relative mb-4">
-              <OptimizedImage src="https://i.ibb.co/MyKzGnTB/card-01.jpg" alt={t("home.shop.magic_cards")} className="w-full object-cover aspect-square" wrapperClassName="w-full max-w-[300px] aspect-square mx-auto rounded bg-white/5" />
+              <OptimizedImage src="/images/card-01.jpg" alt={t("home.shop.magic_cards")} className="w-full object-cover aspect-square" wrapperClassName="w-full max-w-[300px] aspect-square mx-auto rounded bg-white/5" />
               <span className="absolute top-2 right-2 bg-white text-black px-3 py-1 text-sm font-bold shadow">{t("home.shop.stock")}</span>
             </div>
             <h3 className="text-xl mb-2 font-bold text-white">{t("home.shop.magic_cards")}</h3>
@@ -156,7 +156,7 @@ export default function Home() {
           {/* Product 2 */}
           <div className="bg-white/5 p-5 rounded-lg border border-white/10">
             <div className="relative mb-4">
-              <OptimizedImage src="https://i.ibb.co/Q3g3HyLQ/IMG-0525.jpg" alt={t("home.shop.unicorn_shirt")} className="w-full object-cover aspect-square" wrapperClassName="w-full max-w-[300px] aspect-square mx-auto rounded bg-white/5" />
+              <OptimizedImage src="/images/IMG-0525.jpg" alt={t("home.shop.unicorn_shirt")} className="w-full object-cover aspect-square" wrapperClassName="w-full max-w-[300px] aspect-square mx-auto rounded bg-white/5" />
               <span className="absolute top-2 right-2 bg-gold-end text-black px-3 py-1 text-sm font-bold shadow">{t("home.shop.preorder")}</span>
             </div>
             <h3 className="text-xl mb-2 font-bold text-white">{t("home.shop.unicorn_shirt")}</h3>
