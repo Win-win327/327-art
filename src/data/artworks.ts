@@ -354,7 +354,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-sea-turtle",
     title: "寶石海龜",
-    img: "https://i.ibb.co/DfVtwnMv/port-splash-06.jpg",
+    img: "/images/port-splash-06.jpg",
     year: "2021",
     size: "45.5x53cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -364,7 +364,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-dragon-boat-festival",
     title: "端午龍",
-    img: "https://i.ibb.co/vgQZVCG/port-splash-07.jpg",
+    img: "/images/port-splash-07.jpg",
     year: "2025",
     size: "65x53cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -374,7 +374,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-cat-fish",
     title: "雙",
-    img: "https://i.ibb.co/Qv5NMVVg/port-splash-08.jpg",
+    img: "/images/port-splash-08.jpg",
     year: "2025",
     size: "65x53cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -384,7 +384,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-cat-stare",
     title: "貓 の凝視",
-    img: "https://i.ibb.co/v4zKn06Y/port-splash-09.jpg",
+    img: "/images/port-splash-09.jpg",
     year: "2025",
     size: "45.5x33cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -394,7 +394,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-elephant",
     title: "潑彩象神",
-    img: "https://i.ibb.co/x82CXSZM/port-splash-010.jpg",
+    img: "/images/port-splash-010.jpg",
     year: "2020",
     size: "50x50cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -404,7 +404,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-lion-magic-lamp",
     title: "神 燈 獅",
-    img: "https://i.ibb.co/4RYdw98M/port-splash-011.jpg",
+    img: "/images/port-splash-011.jpg",
     year: "2020",
     size: "38x45cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
@@ -414,7 +414,7 @@ export const artworks: Artwork[] = [
   {
     id: "cs-owl-teacher",
     title: "智者",
-    img: "https://i.ibb.co/R42zg3wJ/port-splash-012.jpg",
+    img: "/images/port-splash-012.jpg",
     year: "2025",
     size: "65x53cm",
     media: "複合媒材 壓克力 油畫 Mix Media, Acrylic & Oil on Canvas",
