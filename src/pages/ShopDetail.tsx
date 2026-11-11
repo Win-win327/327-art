@@ -9,13 +9,13 @@ import ReturnPolicySection from "../components/common/ReturnPolicySection";
 // 多語言說明書 GIF 動畫圖檔
 const manualGifUrl = "https://i.ibb.co/qLV5w6bH/image.gif";
 
-// 故事段落圖片（預留五張圖片位置，待使用者提供網址後填入即可即時顯示）
+// 故事段落圖片（已替換為本地高速靜態資源，圖四 GIF 維持原樣）
 const storyImages: Record<string, string> = {
-  img1: "https://i.ibb.co/gZwH7yJt/1-1-2.jpg", // 〔圖一〕
-  img2: "https://i.ibb.co/6cbt9tF8/IMG-2385.jpg", // 〔圖二〕
-  img3: "https://i.ibb.co/fGTbfKXC/IMG-8804-2.jpg", // 〔圖三〕 方案 B (IMG-8804)
-  img4: "https://i.ibb.co/bRsLWpF3/D29-E5-CF0-9-A9-B-424-D-879-B-85-DF3234-CBC7.gif", // 〔圖四〕 (GIF 動態圖)
-  img5: "https://i.ibb.co/nM0c81KZ/IMG-9044.jpg", // 〔圖五〕 方案 A (IMG-9044)
+  img1: "/images/story-01.jpg", // 〔圖一〕行銷圖1-1
+  img2: "/images/story-02.jpg", // 〔圖二〕IMG_2385
+  img3: "/images/story-03.jpg", // 〔圖三〕IMG_8804 (POWER 力量牌卡正面)
+  img4: "https://i.ibb.co/bRsLWpF3/D29-E5-CF0-9-A9-B-424-D-879-B-85-DF3234-CBC7.gif", // 〔圖四〕 (GIF 動態圖，先跳過不動)
+  img5: "/images/story-05.jpg", // 〔圖五〕IMG_9044 (卡牌大合照)
 };
 
 const images = [
@@ -414,7 +414,7 @@ export default function ShopDetail() {
         <h2 className="font-en text-3xl mb-10 pb-4 border-b border-white/15 text-center text-gradient-white-gold drop-shadow-sm">
           {t("shopdetail.how_title")}
         </h2>
-        <img src="https://i.ibb.co/MxZQj9zm/how-to-use.jpg" alt={t("shopdetail.how_title")} className="w-full rounded shadow-lg" />
+        <img src="/images/how-to-use.jpg" alt={t("shopdetail.how_title")} className="w-full rounded shadow-lg" />
       </div>
 
       <div className="max-w-4xl mx-auto mb-[100px] px-5">
@@ -422,7 +422,7 @@ export default function ShopDetail() {
           {t("shopdetail.contents_title")}
         </h2>
         <div className="bg-white/5 p-6 md:p-10 rounded-lg shadow-xl">
-          <img src="https://i.ibb.co/gLtZBjpy/catalog-img.jpg" alt="目錄意境圖" className="w-full rounded mb-8 shadow" />
+          <img src="/images/catalog-img.jpg" alt="目錄意境圖" className="w-full rounded mb-8 shadow" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[60px] gap-y-[15px]">
           {catalogItems.map(([title, keyword], idx) => (
             <div key={idx} className="flex justify-between border-b border-dashed border-white/15 pb-2 text-gray-300">
@@ -438,7 +438,7 @@ export default function ShopDetail() {
         <h2 className="font-en text-3xl mb-10 pb-4 border-b border-white/15 text-center text-gradient-white-gold drop-shadow-sm">
           {t("shopdetail.spec_title")}
         </h2>
-        <img src="https://i.ibb.co/q3mvMjMm/spec-img.jpg" alt="規格尺寸說明" className="w-full rounded mb-8 shadow-lg" />
+        <img src="/images/spec-img.jpg" alt="規格尺寸說明" className="w-full rounded mb-8 shadow-lg" />
         <div className="text-lg leading-loose text-center text-gray-200">
           <p>
             {t("shopdetail.spec_p1")}<br />
