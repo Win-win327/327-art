@@ -13,8 +13,8 @@ const productData = {
   sizes: ["XS", "S", "M", "L", "XL", "XXL"],
   images: [
     "/images/IMG-0525.jpg",
-    "https://i.ibb.co/cK4YYBMT/IMG-0524.jpg",
-    "https://i.ibb.co/svtt9tv0/IMG-0526.jpg"
+    "/images/IMG-0524.jpg",
+    "/images/IMG-0526.jpg"
   ]
 };
 
