@@ -34,22 +34,10 @@ export default function Home() {
             {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((num, i) => (
               <Link to="/portfolio" key={i} className="flex-shrink-0">
                 <OptimizedImage 
-                  src={
-                    num === 1 
-                      ? "https://i.ibb.co/2BK60sW/home-art1.jpg" 
-                      : num === 2 
-                      ? "https://i.ibb.co/MxKb9n2G/home-art2.jpg" 
-                      : num === 3
-                      ? "https://i.ibb.co/cS7QDsCw/home-art3.jpg"
-                      : num === 4
-                      ? "https://i.ibb.co/V7Tqz5m/home-art4.jpg"
-                      : num === 5
-                      ? "https://i.ibb.co/9H4VxwTk/home-art5.jpg"
-                      : `/images/home-art${num}.jpg`
-                  } 
+                  src={`/images/home-art${num}.jpg`}
                   alt={`Artwork ${num}`} 
-                  className="h-[250px] w-auto object-contain opacity-90 hover:opacity-100 transition-opacity" 
-                  wrapperClassName="rounded-md h-[250px] min-w-[150px] bg-white/5"
+                  className="h-[250px] w-auto object-contain opacity-90 hover:opacity-100 transition-opacity rounded-md" 
+                  wrapperClassName="rounded-md h-[250px] min-w-[150px] bg-white/5 shadow-md hover:shadow-xl transition-shadow"
                 />
               </Link>
             ))}

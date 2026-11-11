@@ -15,7 +15,7 @@ export const artworks: Artwork[] = [
   {
     id: "lion-king",
     title: "獅王",
-    img: "https://i.ibb.co/2BK60sW/home-art1.jpg",
+    img: "/images/home-art1.jpg",
     year: "2020",
     size: "45.5x53cm",
     media: "油畫 Oil on Canvas",
@@ -35,7 +35,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-dolphin",
     title: "極光海豚",
-    img: "https://i.ibb.co/MxKb9n2G/home-art2.jpg",
+    img: "/images/home-art2.jpg",
     year: "2019",
     size: "31.5x41cm",
     media: "油畫 Oil on Canvas",

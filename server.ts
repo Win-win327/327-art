@@ -61,6 +61,10 @@ async function startServer() {
     }
   });
 
+  // Serve static assets from public explicitly
+  app.use(express.static(path.join(process.cwd(), 'public')));
+  app.use('/images', express.static(path.join(process.cwd(), 'public/images')));
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
