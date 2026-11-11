@@ -259,7 +259,7 @@ export const artworks: Artwork[] = [
   {
     id: "brave-lion",
     title: "勇氣的力量",
-    img: "https://i.ibb.co/HpGkfCfS/port-aurora-025.jpg",
+    img: "/images/port-aurora-025.jpg",
     year: "2024",
     size: "53x65cm",
     media: "油畫 Oil on Canvas",
@@ -269,7 +269,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-mouse",
     title: "極光黃金鼠",
-    img: "https://i.ibb.co/ksdVVDpD/port-aurora-026.jpg",
+    img: "/images/port-aurora-026.jpg",
     year: "2020",
     size: "53x45cm",
     media: "油畫 Oil on Canvas",
@@ -279,7 +279,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-mink",
     title: "豐盛的源頭",
-    img: "https://i.ibb.co/jvjrPYzJ/port-aurora-027.jpg",
+    img: "/images/port-aurora-027.jpg",
     year: "2021",
     size: "未提尺寸規格",
     media: "油畫 Oil on Canvas",
@@ -290,7 +290,7 @@ export const artworks: Artwork[] = [
   {
     id: "aurora-lion-mother-hug",
     title: "堅定",
-    img: "https://i.ibb.co/wr857Z19/port-aurora-028.jpg",
+    img: "/images/port-aurora-028.jpg",
     year: "2022",
     size: "未提尺寸規格",
     media: "油畫 Oil on Canvas",
